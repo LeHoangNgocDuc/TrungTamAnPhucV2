@@ -4,7 +4,7 @@
   <base target="_top">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AN PHÚC EDUCATION | Hệ Thống Quản Lý V4.22</title>
+  <title>AN PHÚC EDUCATION | Hệ Thống Quản Lý V4.23</title>
   
   <!-- Font Be Vietnam Pro & Bootstrap Icons -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -444,6 +444,75 @@
     .omr-guide{display:grid;grid-template-columns:repeat(4,minmax(130px,1fr));gap:8px;margin-top:10px}.omr-guide>div{border:1px solid #E2E8F0;border-radius:10px;padding:9px;background:#F8FAFC}.omr-guide b{display:block;color:#0F4C81;margin-bottom:3px}.omr-guide span{font-size:11.5px;color:#64748B}
     @media(max-width:720px){.exam-paper-modal{padding:0}.exam-paper-dialog{width:100vw;height:100dvh;border-radius:0}.exam-paper-stage-wrap{padding:8px}.exam-paper-toolbar{padding:8px}.exam-paper-toolbar .paper-title{width:100%;order:-1}.graded-exam-item{grid-template-columns:1fr}.omr-guide{grid-template-columns:1fr 1fr}.exam-paper-footer{position:sticky;bottom:0}}
 
+
+
+    /* ============================================================
+       V4.23 - AUTH UX + PARENT PORTAL 2026
+       ============================================================ */
+    .login-modal-card{max-width:460px!important;border:1px solid rgba(148,163,184,.25);border-radius:28px!important;padding:34px!important;box-shadow:0 32px 90px rgba(15,23,42,.30)!important;background:rgba(255,255,255,.98)!important}
+    .login-shield{width:70px;height:70px;border-radius:23px;background:linear-gradient(145deg,#DBEAFE,#E0E7FF);box-shadow:inset 0 0 0 1px rgba(37,99,235,.08),0 12px 30px rgba(37,99,235,.12)}
+    .login-modal-card h3{font-size:24px;color:#0F3D68;letter-spacing:-.35px}.login-subtitle{font-size:13px;color:#64748B;margin-bottom:22px}
+    .login-field{height:54px;border-radius:15px;border-color:#DCE4EF;background:#FCFDFE;transition:.18s ease;overflow:hidden}.login-field:focus-within{border-color:#60A5FA;box-shadow:0 0 0 4px rgba(59,130,246,.10);background:#fff}.login-field>i{width:44px}.login-field input{height:52px;font-size:16px!important;background:transparent}.login-eye{width:46px;height:52px;border:0;background:transparent;color:#64748B;cursor:pointer;font-size:17px}.login-eye:hover{color:#2563EB}.login-actions{margin-top:8px}.login-actions .btn{min-height:48px;border-radius:14px;font-size:15px}.login-inline-error{margin:-4px 0 14px;padding:11px 12px;border:1px solid #FCA5A5;background:#FEF2F2;color:#B91C1C;border-radius:12px;font-size:12.5px;line-height:1.45;align-items:flex-start;gap:7px}.login-inline-error:before{content:"⚠";font-weight:900}.login-security-note{border:1px solid #E2E8F0;background:#F8FAFC;border-radius:12px;line-height:1.5}
+
+    #public-app.public-shell{background:
+      radial-gradient(circle at 8% 0%,rgba(59,130,246,.12),transparent 34%),
+      radial-gradient(circle at 92% 8%,rgba(16,185,129,.10),transparent 31%),
+      linear-gradient(180deg,#F5F9FF 0%,#F8FAFC 42%,#FFFFFF 100%);padding:18px 16px 32px}
+    #public-app .public-wrap{max-width:1380px}
+    #public-app .public-header{position:sticky;top:10px;z-index:30;padding:13px 16px;border:1px solid rgba(203,213,225,.74);border-radius:20px;background:rgba(255,255,255,.86);backdrop-filter:blur(18px);box-shadow:0 10px 36px rgba(15,23,42,.07)}
+    #public-app .public-header .brand-title{color:#0F3D68;letter-spacing:-.15px}
+    #public-app .public-header .brand-slogan{color:#64748B}
+    #public-app .portal-back-btn,#public-app .public-login-btn{height:40px;border-radius:12px;box-shadow:none}
+    #parent-portal.parent-portal-v414{grid-template-columns:340px minmax(0,1fr);gap:20px;align-items:start;margin-top:16px}
+    #parent-portal .parent-brand-panel{position:sticky;top:102px}
+    #parent-portal .parent-brand-hero{border-radius:30px;padding:28px;background:linear-gradient(145deg,#0B3B67 0%,#135F9B 48%,#0F766E 115%);box-shadow:0 24px 60px rgba(15,76,129,.20);border:1px solid rgba(255,255,255,.14)}
+    #parent-portal .parent-brand-hero:before{content:"";position:absolute;inset:auto -90px -120px auto;width:260px;height:260px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.16),rgba(255,255,255,0) 70%)}
+    #parent-portal .parent-brand-icon{width:58px;height:58px;border-radius:19px;background:rgba(255,255,255,.15);box-shadow:inset 0 0 0 1px rgba(255,255,255,.14)}
+    #parent-portal .parent-brand-hero h2{font-size:27px;letter-spacing:-.35px}.parent-brand-kicker{color:#CFFAFE!important}.parent-slogan{color:#E0F2FE}.parent-trust-row{display:flex;gap:7px;flex-wrap:wrap;margin-top:14px}.parent-trust-row span{display:inline-flex;align-items:center;gap:5px;padding:7px 9px;border-radius:999px;background:rgba(255,255,255,.11);border:1px solid rgba(255,255,255,.13);font-size:10.5px;font-weight:750;color:#F8FAFC}
+    #parent-portal .parent-hub-title{font-size:12px;text-transform:uppercase;letter-spacing:.8px;color:#64748B;margin:4px 4px 0}
+    #parent-portal .parent-quick-hub{gap:10px}
+    #parent-portal .parent-hub-action{min-height:72px;border-radius:20px;padding:12px 14px;border-color:#E2E8F0;background:rgba(255,255,255,.92);box-shadow:0 10px 30px rgba(15,23,42,.055);transition:transform .18s ease,border-color .18s ease,box-shadow .18s ease}
+    #parent-portal .parent-hub-action:hover,#parent-portal .parent-hub-action.active{transform:translateY(-2px);border-color:#93C5FD;box-shadow:0 16px 34px rgba(37,99,235,.10)}
+    #parent-portal .hub-icon{width:46px;height:46px;border-radius:15px;font-size:19px}
+    #parent-portal .parent-hub-action b{font-size:14px;color:#172033}.parent-hub-action small{font-size:11.5px}
+    #parent-portal .parent-contact-card{border-radius:22px;padding:16px;border-color:#E2E8F0;box-shadow:0 10px 28px rgba(15,23,42,.045);background:rgba(255,255,255,.92)}
+    #parent-portal .parent-chat-app{min-height:720px;border-radius:30px;border-color:#DCE6F2;background:rgba(255,255,255,.94);box-shadow:0 28px 70px rgba(15,76,129,.12)}
+    #parent-portal .parent-chat-toolbar{height:78px;padding:0 20px;background:linear-gradient(180deg,rgba(255,255,255,.98),rgba(248,251,255,.96));border-bottom-color:#E6EDF5}
+    #parent-portal .assistant-avatar{width:48px;height:48px;border-radius:16px;background:linear-gradient(145deg,#2563EB,#0EA5E9);box-shadow:0 10px 24px rgba(37,99,235,.20)}
+    #parent-portal .assistant-title b{font-size:16px}.assistant-title span{margin-top:2px}
+    #parent-portal .chat-body.parent-service-content{padding:24px;background:linear-gradient(180deg,#F8FBFF 0%,#FFFFFF 54%)}
+    #parent-portal .parent-welcome-card{max-width:720px;border-radius:26px;padding:28px;border-color:#D9E8FA;background:linear-gradient(145deg,#FFFFFF,#F4F9FF 60%,#F0FDFA);box-shadow:0 14px 36px rgba(15,76,129,.07)}
+    #parent-portal .parent-welcome-card .welcome-icon{width:66px;height:66px;border-radius:21px;background:linear-gradient(145deg,#DBEAFE,#E0F2FE);color:#1D4ED8}
+    #parent-portal .chat-bubble{border-radius:20px;padding:13px 15px;box-shadow:0 5px 18px rgba(15,23,42,.045)}
+    #parent-portal .chat-row.user .chat-bubble{background:linear-gradient(145deg,#2563EB,#1D4ED8 62%,#4F46E5);box-shadow:0 8px 20px rgba(37,99,235,.16)}
+    #parent-portal .parent-chat-dock{background:rgba(255,255,255,.96);backdrop-filter:blur(14px)}
+    #parent-portal .quick-reply-strip{padding:11px 14px 5px}.quick-reply-strip button{border-radius:12px!important;background:#F8FBFF!important;border-color:#D6E5F7!important}
+    #parent-portal .chat-input-row{padding:9px 14px 15px}.chat-input-row input{height:52px!important;border-radius:16px!important;border-color:#DCE6F2!important}.chat-input-row input:focus{box-shadow:0 0 0 4px rgba(59,130,246,.10)!important;border-color:#60A5FA!important}.parent-send-btn{height:52px!important;border-radius:16px!important}
+    .parent-mobile-welcome{display:none}
+
+    @media(max-width:992px){
+      #parent-portal.parent-portal-v414{grid-template-columns:290px minmax(0,1fr);gap:14px}
+      #parent-portal .parent-brand-hero{padding:22px}.parent-trust-row span{font-size:9.5px}
+    }
+    @media(max-width:768px){
+      #public-app.public-shell{padding:0;background:#F6F9FD}
+      #public-app .public-wrap{max-width:none}
+      #public-app .public-header{top:0;margin:0;border-radius:0;border-left:0;border-right:0;padding:10px 12px;box-shadow:0 4px 18px rgba(15,23,42,.06)}
+      #public-app .public-header .logo-box{width:44px;height:44px;border-radius:12px}
+      #public-app .public-header .brand-title{font-size:12px;max-width:170px}.public-header .brand-slogan{display:none}
+      #public-app .portal-back-btn{font-size:0;width:40px;padding:0}.public-header .portal-back-btn i{font-size:16px;margin:0}.public-login-btn{font-size:0;width:40px;padding:0}.public-login-btn i{font-size:16px;margin:0}
+      #parent-portal.parent-portal-v414{display:block;margin-top:0}
+      #parent-portal .parent-brand-panel{display:none}
+      #parent-portal .parent-chat-app{height:calc(100dvh - 65px);min-height:560px;border-radius:0;border:0;box-shadow:none;background:#fff}
+      .parent-mobile-welcome{display:flex;align-items:center;gap:10px;padding:12px 13px;background:linear-gradient(145deg,#0F4C81,#2563EB);color:#fff;border-bottom:1px solid rgba(255,255,255,.15)}.pmw-icon{width:38px;height:38px;border-radius:12px;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.15);font-size:18px}.parent-mobile-welcome>div:nth-child(2){display:flex;flex-direction:column;min-width:0}.parent-mobile-welcome b{font-size:13.5px}.parent-mobile-welcome span{font-size:10.5px;color:#DBEAFE}.pmw-live{margin-left:auto!important;display:inline-flex;align-items:center;gap:4px;padding:6px 8px;border-radius:999px;background:rgba(255,255,255,.13);font-size:9.5px!important;color:#F0FDFA!important;white-space:nowrap}
+      #parent-portal .parent-chat-toolbar{height:58px;padding:0 11px}.assistant-avatar{width:38px!important;height:38px!important;border-radius:12px!important}.assistant-title b{font-size:14px!important}.assistant-title span{font-size:10.5px!important}
+      #parent-portal .chat-body.parent-service-content{padding:13px 10px 16px}.parent-welcome-card{margin:7px auto!important;padding:18px 14px!important;border-radius:20px!important}.parent-welcome-card .welcome-icon{width:54px!important;height:54px!important;border-radius:18px!important}.parent-welcome-card h3{font-size:18px!important}
+      #parent-portal .parent-chat-dock{position:sticky;bottom:0;padding-bottom:max(0px,env(safe-area-inset-bottom))}
+      #parent-portal .quick-reply-strip{padding:7px 9px 4px}.quick-reply-strip button{font-size:12px!important;padding:9px 10px!important}
+      #parent-portal .chat-input-row{padding:7px 9px 9px}.chat-input-row input{height:48px!important}.parent-send-btn{height:48px!important;min-width:48px!important;width:48px!important}
+      .login-modal-card{padding:24px 18px!important;border-radius:24px!important;max-width:calc(100vw - 24px)!important}.login-shield{width:60px;height:60px;border-radius:19px}.login-modal-card h3{font-size:21px}.login-actions{display:grid;grid-template-columns:1fr 1fr}.login-actions .btn{width:100%}
+    }
+
 </style>
 </head>
 <body>
@@ -503,6 +572,7 @@
           <h2>Đồng hành cùng phụ huynh</h2>
           <p>Tra cứu nhanh, xem lịch học và kết nối với Trung tâm trong một giao diện an toàn, dễ sử dụng.</p>
           <div class="parent-slogan">“Vững kiến thức - Chắc tương lai”</div>
+          <div class="parent-trust-row"><span><i class="bi bi-shield-lock-fill"></i> Xác thực SĐT</span><span><i class="bi bi-phone"></i> Mobile-first</span><span><i class="bi bi-lightning-charge-fill"></i> Tra cứu nhanh</span></div>
         </div>
 
         <div class="parent-hub-title">Chọn nhanh</div>
@@ -522,6 +592,11 @@
       </aside>
 
       <main class="parent-chat-app">
+        <div class="parent-mobile-welcome">
+          <div class="pmw-icon"><i class="bi bi-stars"></i></div>
+          <div><b>Cổng Phụ huynh An Phúc</b><span>Tra cứu nhanh - bảo mật - tối ưu điện thoại</span></div>
+          <span class="pmw-live"><i class="bi bi-shield-check"></i> An toàn</span>
+        </div>
         <div class="parent-chat-toolbar">
           <div class="assistant-avatar"><i class="bi bi-stars"></i></div>
           <div class="assistant-title"><b>Trợ lý An Phúc</b><span><i class="bi bi-circle-fill"></i> Sẵn sàng hỗ trợ</span></div>
@@ -672,11 +747,11 @@
 
 
 
-    <!-- PANEL CHẤM BÀI AI V4.22 -->
+    <!-- PANEL CHẤM BÀI AI V4.23 -->
     <div id="ai" class="panel">
       <div class="ai-shell">
         <section class="ai-hero">
-          <div><h2><i class="bi bi-stars"></i> Chấm bài tự động V4.22</h2><p>A/B đọc ô tô OMR • C/D đọc chữ viết tay • AI ghi nhận xét đỏ lên bài • Giáo viên duyệt • Phụ huynh xem bài đã chấm.</p></div>
+          <div><h2><i class="bi bi-stars"></i> Chấm bài tự động V4.23</h2><p>A/B đọc ô tô OMR • C/D đọc chữ viết tay • AI ghi nhận xét đỏ lên bài • Giáo viên duyệt • Phụ huynh xem bài đã chấm.</p></div>
           <div class="ai-version">Bắt buộc GV duyệt</div>
         </section>
 
@@ -984,11 +1059,11 @@
 
     <!-- PANEL CÀI ĐẶT -->
     <div id="st" class="panel">
-      <h3 class="section-title"><i class="bi bi-sliders"></i> Cài đặt Hệ thống V4.22</h3>
+      <h3 class="section-title"><i class="bi bi-sliders"></i> Cài đặt Hệ thống V4.23</h3>
       <div style="background:#EFF6FF;border:1px solid #BFDBFE;padding:20px;border-radius:var(--radius-md);margin-bottom:20px;">
-        <h4 style="color:var(--primary-dark);margin-bottom:8px;"><i class="bi bi-database-check"></i> CẬP NHẬT CẤU TRÚC & TỰ ĐỘNG HÓA V4.22</h4>
+        <h4 style="color:var(--primary-dark);margin-bottom:8px;"><i class="bi bi-database-check"></i> CẬP NHẬT CẤU TRÚC & TỰ ĐỘNG HÓA V4.23</h4>
         <p style="color:var(--text-muted);margin-bottom:12px;">Chạy một lần để giữ toàn bộ bảo mật V4.8 và bổ sung nhập dữ liệu Kiểm tra trực tiếp từ Excel, liên kết bài kiểm tra và thông báo đăng ký về Zalo Trung tâm.</p>
-        <button class="btn btn-primary" onclick="runSetupV4()"><i class="bi bi-tools"></i> Chạy setup V4.22</button>
+        <button class="btn btn-primary" onclick="runSetupV4()"><i class="bi bi-tools"></i> Chạy setup V4.23</button>
       </div>
 
 
@@ -1044,7 +1119,7 @@
           <h4 style="margin:0;color:#B91C1C"><i class="bi bi-send-check-fill"></i> Chẩn đoán Zalo Gateway</h4>
           <button class="btn" style="background:#FEE2E2;color:#991B1B" onclick="loadZaloDiagnostics()"><i class="bi bi-activity"></i> Kiểm tra</button>
         </div>
-        <div class="mini-note" style="margin-top:8px">V4.22 tiếp tục dùng kết nối Zalo đơn giản: Apps Script gửi JSON trực tiếp qua Ngrok đến một file <b>zalo_server.py</b>. Không còn API key/fingerprint ở Gateway nên tránh lỗi 401 do lệch khóa.</div>
+        <div class="mini-note" style="margin-top:8px">V4.23 tiếp tục dùng kết nối Zalo đơn giản: Apps Script gửi JSON trực tiếp qua Ngrok đến một file <b>zalo_server.py</b>. Không còn API key/fingerprint ở Gateway nên tránh lỗi 401 do lệch khóa.</div>
         <div class="schedule-editor-grid" style="margin-top:10px">
           <input id="zalo-gateway-url-admin" type="url" placeholder="https://...ngrok-free.dev">
           <div id="zalo-diag-box" class="mini-note" style="padding:12px;background:#fff;border:1px solid var(--border);border-radius:9px">Chưa kiểm tra Gateway.</div>
@@ -1107,10 +1182,11 @@
     <p class="login-subtitle">Xác thực được thực hiện tại máy chủ. Phiên đăng nhập quản trị có thời hạn 12 giờ.</p>
     <form onsubmit="event.preventDefault();loginAdmin()">
       <div class="row"><label for="login-user">Tài khoản</label><div class="login-field"><i class="bi bi-person"></i><input id="login-user" type="text" value="admin" autocomplete="username" required></div></div>
-      <div class="row"><label for="login-pass">Mật khẩu</label><div class="login-field"><i class="bi bi-key"></i><input id="login-pass" type="password" autocomplete="current-password" required></div></div>
-      <div class="login-actions"><button type="button" class="btn login-cancel" onclick="closeLoginModal()">Hủy</button><button type="submit" class="btn btn-primary"><i class="bi bi-box-arrow-in-right"></i> Đăng nhập</button></div>
+      <div class="row"><label for="login-pass">Mật khẩu</label><div class="login-field"><i class="bi bi-key"></i><input id="login-pass" type="password" autocomplete="current-password" required><button class="login-eye" type="button" onclick="toggleLoginPassword()" aria-label="Hiện hoặc ẩn mật khẩu"><i id="login-eye-icon" class="bi bi-eye"></i></button></div></div>
+      <div id="login-error" class="login-inline-error" role="alert" style="display:none"></div>
+      <div class="login-actions"><button type="button" class="btn login-cancel" onclick="closeLoginModal()">Hủy</button><button id="login-submit-btn" type="submit" class="btn btn-primary"><i class="bi bi-box-arrow-in-right"></i> Đăng nhập</button></div>
     </form>
-    <div class="login-security-note"><i class="bi bi-info-circle"></i> API quản trị sẽ từ chối mọi yêu cầu không có token hợp lệ.</div>
+    <div class="login-security-note"><i class="bi bi-shield-check"></i> Xác thực tại máy chủ, token phiên 12 giờ. Nếu vừa nâng V4.23, hãy chạy <b>setupSystemV423()</b> một lần trong Apps Script trước khi đăng nhập.</div>
   </div>
 </div>
 
@@ -1164,9 +1240,9 @@
   // ============================================
   // CẤU HÌNH API - LIÊN KẾT VỚI GOOGLE SHEET
   // ============================================
-  const API_URL = "https://script.google.com/macros/s/AKfycbzRVge0Y1h1_3757uCozxMd_1aX4KpQEYMEMa3nryZO3fXCtHmTq2wPNW9VEYGkxjUG/exec";
+  const API_URL = "https://script.google.com/macros/s/AKfycbxc_6zNHDmHYhRThU78-SsT5Kh6GBhBc3hNtmoNrSv71EDpgR2uAw-dPQkNYdob0J9y/exec";
   const CENTER_INFO = {
-    address: '30/11A Phước Tường, Phước Long, Nam Nha Trang',
+    address: '30/11D Phước Tường, Phước Long, Nam Nha Trang',
     phone: '0972466347',
     zalo: '0972466347',
     maps_url: 'https://www.google.com/maps/search/?api=1&query=30%2F11D%20Ph%C6%B0%E1%BB%9Bc%20T%C6%B0%E1%BB%9Dng%2C%20Ph%C6%B0%E1%BB%9Bc%20Long%2C%20Nam%20Nha%20Trang'
@@ -1191,7 +1267,7 @@
   const PUBLIC_GET_ACTIONS = new Set(['validateAdminSession','getPublicBootstrap','getPublicSchedule','getPublicExams','getPublicSystemStatus','publicPing','publicFindStudentByName','getParentGradedExam','getParentGradedExamAsset']);
   const EXAM_STUDENT_URL = 'https://anphuceducation.netlify.app/student';
   const PUBLIC_POST_ACTIONS = new Set(['adminLogin','publicVerifyStudentPhone','submitRegistration']);
-  const EXPECTED_BACKEND_VERSION='V4.22';
+  const EXPECTED_BACKEND_VERSION='V4.23';
   const PUBLIC_API_STATE={status:'unknown',version:'',message:''};
   let CHAT_SEND_BUSY=false;
   let PUBLIC_PORTAL_READY=false;
@@ -1230,7 +1306,7 @@
   async function checkPublicBackend_(showOk=false){
     try{
       const r=await rawPublicPing_(); const v=String(r?.data?.version||r?.meta?.version||''); PUBLIC_API_STATE.version=v;
-      if(v!==EXPECTED_BACKEND_VERSION){setPublicApiStatus_('warn',`⚠️ Giao diện ${EXPECTED_BACKEND_VERSION} đang kết nối Backend <b>${escapeHtml(v||'không xác định')}</b>. Hãy Deploy <b>New Version</b> của Code.gs V4.22 rồi tải lại trang.`);return false;}
+      if(v!==EXPECTED_BACKEND_VERSION){setPublicApiStatus_('warn',`⚠️ Giao diện ${EXPECTED_BACKEND_VERSION} đang kết nối Backend <b>${escapeHtml(v||'không xác định')}</b>. Hãy chạy <b>setupSystemV423()</b>, sau đó Deploy <b>New Version</b> của Code.gs V4.23 rồi tải lại trang.`);return false;}
       if(showOk)setPublicApiStatus_('ok',`✅ Backend ${escapeHtml(v)} đang hoạt động bình thường.`); else {const el=document.getElementById('public-api-status');if(el)el.style.display='none';}
       PUBLIC_API_STATE.status='ok';return true;
     }catch(e){setPublicApiStatus_('error',`❌ Không kết nối được máy chủ Google Apps Script. Hãy kiểm tra <b>Deploy → Manage deployments → Execute as Me → Who has access: Anyone</b> và bảo đảm API_URL đang dùng đúng link <b>/exec</b>.`);return false;}
@@ -1249,11 +1325,11 @@
     else{options.headers={'Content-Type':'text/plain;charset=utf-8'};options.body=JSON.stringify({action,...payload});}
 
     const controller=new AbortController();options.signal=controller.signal;const actionTimeout = action==='gradeExamSubmissionAI'?120000:(action==='uploadExamSubmissionFile'?70000:((action==='getExamSubmissionAsset'||action==='getParentGradedExamAsset')?60000:(isPublic?20000:30000)));const timeoutId=setTimeout(()=>controller.abort(),actionTimeout);const started=performance.now();let response;
-    try{response=await fetch(url,options);}catch(e){if(e.name==='AbortError'){if(isPublic&&action!=='publicPing'){await checkPublicBackend_(false);if(PUBLIC_API_STATE.status==='ok')throw new Error('Backend đang kết nối nhưng tác vụ dữ liệu phản hồi quá chậm. Hãy chạy setupSystemV420() một lần rồi Deploy New Version.');}throw new Error('Không kết nối được máy chủ. Vui lòng kiểm tra trạng thái Backend ở đầu Cổng phụ huynh.');}throw e;}finally{clearTimeout(timeoutId);}
+    try{response=await fetch(url,options);}catch(e){if(e.name==='AbortError'){if(isPublic&&action!=='publicPing'){await checkPublicBackend_(false);if(PUBLIC_API_STATE.status==='ok')throw new Error('Backend đang kết nối nhưng tác vụ dữ liệu phản hồi quá chậm. Hãy chạy setupSystemV423() một lần rồi Deploy New Version.');}throw new Error('Không kết nối được máy chủ. Vui lòng kiểm tra trạng thái Backend ở đầu Cổng phụ huynh.');}throw e;}finally{clearTimeout(timeoutId);}
     const text=await response.text();let result;try{result=JSON.parse(text);}catch(e){throw new Error('API không trả JSON. HTTP '+response.status+': '+text.slice(0,100));}
     if(!response.ok)throw new Error(result.message||'HTTP '+response.status);
     if(result.success===false){ if(/UNAUTHORIZED|Phiên đăng nhập/i.test(result.message||'')) logoutAdmin(false); throw new Error(result.message||'Thao tác thất bại'); }
-    const totalMs=Math.round(performance.now()-started);if((result.meta?.server_ms||totalMs)>800)console.info(`[V4.22] ${action}: server ${result.meta?.server_ms??'?'} ms, tổng ${totalMs} ms`);
+    const totalMs=Math.round(performance.now()-started);if((result.meta?.server_ms||totalMs)>800)console.info(`[V4.23] ${action}: server ${result.meta?.server_ms??'?'} ms, tổng ${totalMs} ms`);
     if(method==='GET')CLIENT_GET_CACHE.set(cacheKey,{value:result,expires:Date.now()+12000});
     else{clearClientApiCache();TAB_LOADED.tk=false;try{sessionStorage.removeItem('anphuc_v48_initial');}catch(e){}const qActions=new Set(['saveAttendance','sendTuitionMessage','sendBulkTuitionReminders','sendClassLessonReport','sendBulkClassLessonReports','sendStudentSituationReport','sendBulkStudentSituationReports','sendMultiMonthTuitionReminder','sendBulkMultiMonthTuitionReminders','runTuitionReminderNow','retryUnreachableZaloStudent','saveScores','reviewExamSubmission','sendExamResultToParent','sendApprovedExamResultsBulk','saveAndSendHomework','processZaloQueue','submitRegistration']);if(qActions.has(action)&&isAdminAuthenticated())setTimeout(refreshZaloQueueStatus,250);}
     return result;
@@ -1301,9 +1377,25 @@
   function showPublicMode(){showLandingMode();}
   function openParentPortal(){const landing=document.getElementById('role-landing');if(landing)landing.style.display='none';document.getElementById('admin-app').style.display='none';document.getElementById('public-app').style.display='block';if(!PUBLIC_PORTAL_READY){PUBLIC_PORTAL_READY=true;initPublicChat();}}
   async function openTeacherPortal(){if(isAdminAuthenticated()){try{loading(true);const check=await callAPI('validateAdminSession',{},'GET');if(check.data?.valid){await enterAdminMode(check.data.username||'admin');return;}}catch(e){console.warn(e);}finally{loading(false);}try{sessionStorage.removeItem('ap_admin_auth');sessionStorage.removeItem('ap_admin_token');}catch(e){}}openLoginModal();}
-  function openLoginModal(){document.getElementById('modal-login').style.display='flex';setTimeout(()=>document.getElementById('login-pass')?.focus(),50);}
-  function closeLoginModal(){document.getElementById('modal-login').style.display='none';}
-  async function loginAdmin(){const username=document.getElementById('login-user').value.trim(),password=document.getElementById('login-pass').value;try{loading(true);const r=await callAPI('adminLogin',{username,password},'POST');const x=r.data||{};sessionStorage.setItem('ap_admin_auth','1');sessionStorage.setItem('ap_admin_token',x.token||'');closeLoginModal();document.getElementById('login-pass').value='';await enterAdminMode(x.username||username);showToast('Đăng nhập thành công.');}catch(e){showError(e);}finally{loading(false);}}
+  function setLoginError_(message){const el=document.getElementById('login-error');if(!el)return;if(!message){el.style.display='none';el.textContent='';return;}el.textContent=String(message);el.style.display='flex';}
+  function openLoginModal(){setLoginError_('');document.getElementById('modal-login').style.display='flex';setTimeout(()=>document.getElementById('login-pass')?.focus(),50);}
+  function closeLoginModal(){setLoginError_('');document.getElementById('modal-login').style.display='none';}
+  function toggleLoginPassword(){const input=document.getElementById('login-pass'),icon=document.getElementById('login-eye-icon');if(!input)return;const show=input.type==='password';input.type=show?'text':'password';if(icon)icon.className=show?'bi bi-eye-slash':'bi bi-eye';}
+  async function loginAdmin(){
+    const username=document.getElementById('login-user').value.trim(),password=document.getElementById('login-pass').value;
+    const btn=document.getElementById('login-submit-btn');
+    setLoginError_('');
+    if(!username||!password){setLoginError_('Vui lòng nhập đầy đủ tài khoản và mật khẩu.');return;}
+    try{
+      loading(true);if(btn)btn.disabled=true;
+      const backendOk=await checkPublicBackend_(false);
+      if(!backendOk)throw new Error(`Backend chưa đồng bộ ${EXPECTED_BACKEND_VERSION}. Hãy chạy setupSystemV423() và Deploy New Version.`);
+      const r=await callAPI('adminLogin',{username,password},'POST');const x=r.data||{};
+      if(!x.authenticated||!x.token)throw new Error('Máy chủ không trả phiên đăng nhập hợp lệ. Hãy chạy setupSystemV423() rồi Deploy lại.');
+      sessionStorage.setItem('ap_admin_auth','1');sessionStorage.setItem('ap_admin_token',x.token);
+      closeLoginModal();document.getElementById('login-pass').value='';await enterAdminMode(x.username||username);showToast('Đăng nhập thành công.');
+    }catch(e){const msg=e?.message||String(e);setLoginError_(msg);showError(e);}finally{loading(false);if(btn)btn.disabled=false;}
+  }
   async function logoutAdmin(callServer=true){const token=getAdminToken();if(callServer&&token)try{await callAPI('adminLogout',{},'POST');}catch(e){}try{sessionStorage.removeItem('ap_admin_auth');sessionStorage.removeItem('ap_admin_token');sessionStorage.removeItem('anphuc_v48_initial');}catch(e){}clearClientApiCache();showPublicMode();}
   function previewPublicPortal(){window.open(location.origin+location.pathname,'_blank','noopener');}
 
@@ -2429,10 +2521,10 @@
   }
 
   async function runSetupV4() {
-    if (!confirm('Chạy setup V4.22 để bật A/B OMR tô màu, C/D chữ viết tay, nhận xét đỏ trên bài, Cổng Phụ huynh/Giáo viên và giữ nguyên dữ liệu hiện có?')) return;
+    if (!confirm('Chạy setup V4.23 để bật A/B OMR tô màu, C/D chữ viết tay, nhận xét đỏ trên bài, Cổng Phụ huynh/Giáo viên và giữ nguyên dữ liệu hiện có?')) return;
     try {
       loading(true);
-      const r = await callAPI('setupSystemV422', {}, 'POST');
+      const r = await callAPI('setupSystemV423', {}, 'POST');
       const x = r.data || {};
       showToast(`${x.message || 'Setup hoàn tất.'}${x.duplicate_queue_rows_marked ? ` Đã khóa ${x.duplicate_queue_rows_marked} dòng tin trùng.` : ''}${x.duplicate_zalo_triggers_removed ? ` Đã xóa ${x.duplicate_zalo_triggers_removed} trigger Zalo trùng.` : ''}`);
     } catch(e) { showError(e); } finally { loading(false); }
@@ -2544,7 +2636,7 @@
   async function examViewerNextAsset(){const n=(EXAM_VIEWER.meta?.assets||[]).length;if(EXAM_VIEWER.assetIndex<n-1){EXAM_VIEWER.assetIndex++;await examViewerLoadAsset();}}
   function examViewerToggleAddNote(){EXAM_VIEWER.addMode=!EXAM_VIEWER.addMode;const b=document.getElementById('exam-paper-add-note');if(b)b.innerHTML=EXAM_VIEWER.addMode?'<i class="bi bi-cursor-fill"></i> Bấm lên bài để đặt':'<i class="bi bi-pencil-square"></i> Thêm ghi chú';}
   function examViewerResetAnnotations(){EXAM_VIEWER.annotations=JSON.parse(JSON.stringify(EXAM_VIEWER.originalAnnotations||[]));examViewerRenderAnnotations();}
-  async function examViewerSaveAnnotations(){if(EXAM_VIEWER.mode!=='teacher')return;try{loading(true);await callAPI('saveExamSubmissionAnnotations',{submission_id:EXAM_VIEWER.submissionId,annotation:{version:'V4.22',items:EXAM_VIEWER.annotations}},'POST');EXAM_VIEWER.originalAnnotations=JSON.parse(JSON.stringify(EXAM_VIEWER.annotations));showToast('Đã lưu dấu chấm/nhận xét trên bài.');}catch(e){showError(e);}finally{loading(false);}}
+  async function examViewerSaveAnnotations(){if(EXAM_VIEWER.mode!=='teacher')return;try{loading(true);await callAPI('saveExamSubmissionAnnotations',{submission_id:EXAM_VIEWER.submissionId,annotation:{version:'V4.23',items:EXAM_VIEWER.annotations}},'POST');EXAM_VIEWER.originalAnnotations=JSON.parse(JSON.stringify(EXAM_VIEWER.annotations));showToast('Đã lưu dấu chấm/nhận xét trên bài.');}catch(e){showError(e);}finally{loading(false);}}
 
 </script>
 </body>
