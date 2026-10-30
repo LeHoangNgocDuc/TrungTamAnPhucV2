@@ -1,0 +1,15 @@
+KIEM TRA NOI BO V4.22
+
+- Tat ca Code.gs + module .gs: syntax OK khi kiem tra bang Node parser.
+- Toan bo module gop chung: syntax OK, khong trung const/function gay loi parser.
+- index.html: JavaScript syntax OK.
+- HTML: 196 ID, khong co ID trung.
+- vercel.json: JSON hop le.
+- Template JSON: hop le.
+- Test logic:
+  + MC dung -> cong du diem cau.
+  + TF sai 1/4 y -> chi duoc 3/4 diem cua cau.
+  + SA 5/2 duoc xem tuong duong 2,5.
+  + Annotation SA dung -> tao "✓ Đúng".
+  + Annotation LA sai -> tao "✗ Sai: ..." mau do.
+  + Tong diem server tu tinh lai, khong lay diem khach quan do AI tu quyet.

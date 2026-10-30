@@ -1,0 +1,58 @@
+HUONG DAN CAP NHAT WEBQUANLY V4.22 - BAN MODULAR
+
+A. GOOGLE APPS SCRIPT
+1. Mo project Apps Script dang dung.
+2. Thay NOI DUNG Code.gs bang file AppsScript_Modular/Code.gs V4.22.
+3. Thay noi dung CAC MODULE cung ten bang cac file trong AppsScript_Modular:
+   - Module_AIProvider.gs
+   - Module_ExamCore.gs
+   - Module_ExamGrading.gs
+   - Module_ExamImport.gs
+   - Module_ExamParentReport.gs
+   - Module_ExamReview.gs
+   - Module_ExamUpload.gs
+   - Module_TuitionAuto.gs
+   - Module_ZaloContacts.gs
+4. Save tat ca.
+5. Chon ham setupSystemV422 va Run dung 1 lan. Cap quyen neu Google yeu cau.
+6. Deploy -> Manage deployments -> Edit -> New version -> Deploy.
+7. Mo URL /exec?action=publicPing. Phai thay V4.22.
+
+B. VERCEL
+1. Thay Vercel/index.html.
+2. Thay Vercel/vercel.json.
+3. Deploy lai, sau do Ctrl+F5.
+
+C. ZALO
+Khong thay zalo_server.py/khoi_dong.bat trong lan nay. Giu nguyen bo Zalo dang chay on.
+
+D. QUY TRINH CHAM
+1. Giao vien -> Cham bai AI.
+2. Nhap file JSON de + dap an.
+3. Kiem tra phan diem va barem, tao de.
+4. Tai anh/PDF bai hoc sinh.
+5. Bam Cham AI:
+   - A: doc o to A/B/C/D.
+   - B: doc o to Dung/Sai.
+   - C: doc tra loi ngan viet tay.
+   - D: doc va cham tu luan viet tay.
+6. Bam Duyet -> Xem/chinh bai da cham.
+7. Xoa annotation sai, hoac bam Them ghi chu roi bam truc tiep len bai de ghi nhan xet do.
+8. Bam Luu dau cham.
+9. Dieu chinh diem/nhan xet neu can.
+10. Bam Duyet & luu diem, hoac Duyet & gui Zalo PH.
+
+E. PHU HUYNH
+1. Vao Cong Phu huynh -> Tra cuu hoc tap & hoc phi.
+2. Chon hoc sinh, xac thuc SĐT.
+3. O phan "Bai kiem tra da cham", bam "Xem bai da cham".
+4. Phu huynh xem duoc bai goc kem dau ✓/✗ va nhan xet do da duoc GV duyet.
+
+F. MAU GIAY
+Mau chuan: Docs/Mau_Giay_Bai_Lam_AnPhuc.pdf
+Template: ANPHUC_OMR_12MC_4TF_4SA_ESSAY_V1
+- A toi da 12 cau MC.
+- B toi da 4 cau Dung/Sai, moi cau 4 y.
+- C toi da 4 cau tra loi ngan.
+- D tu luan tu trang 1 va co the tiep sang cac trang sau.
+Neu de vuot gioi han mau, he thong danh dau can GV kiem tra thay vi tu doan vi tri.

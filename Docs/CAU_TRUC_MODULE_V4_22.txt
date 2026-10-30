@@ -1,0 +1,34 @@
+CAU TRUC MODULAR V4.22
+
+Code.gs
+- Router API, auth, sheets, parent verification, setupSystemV422.
+
+Module_AIProvider.gs
+- Adapter Gemini + logging, API key ScriptProperties.
+
+Module_ExamCore.gs
+- ExamDefinitions, cau hinh template giay lam bai.
+
+Module_ExamImport.gs
+- Doc JSON MC/TF/SA/LA, tao answer key va rubric.
+
+Module_ExamUpload.gs
+- Upload JPG/PNG/WEBP/PDF vao Drive; API doc asset cho viewer.
+
+Module_ExamGrading.gs
+- A/B OMR, C handwriting SA, D handwriting LA.
+- Backend tinh diem khach quan, AI chi nhan dien.
+- Tao annotation_json mau do.
+
+Module_ExamReview.gs
+- GV duyet diem, sua/xoa/them annotation, luu Scores.
+
+Module_ExamParentReport.gs
+- Gui Zalo ket qua.
+- Cap token ngan han va API phu huynh xem bai da cham; file Drive khong public.
+
+Module_TuitionAuto.gs
+- Nhac hoc phi ngay 25.
+
+Module_ZaloContacts.gs
+- Danh sach HS khong lien lac Zalo.

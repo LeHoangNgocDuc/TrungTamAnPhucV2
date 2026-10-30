@@ -1,0 +1,15 @@
+{
+  "template_id": "ANPHUC_OMR_12MC_4TF_4SA_ESSAY_V1",
+  "page_1": {
+    "A": {"mode": "OMR", "max_questions": 12, "rows": ["A", "B", "C", "D"]},
+    "B": {"mode": "OMR_TRUE_FALSE", "max_questions": 4, "subparts": ["a", "b", "c", "d"], "rows": ["Dung", "Sai"]},
+    "C": {"mode": "HANDWRITING_SHORT_ANSWER", "max_questions": 4},
+    "D": {"mode": "HANDWRITING_ESSAY", "continues_to_next_pages": true}
+  },
+  "grading_policy": {
+    "A_B": "AI vision only reads filled bubbles; backend compares with hidden answer key.",
+    "C": "AI transcribes handwriting; backend compares normalized short answer.",
+    "D": "AI proposes rubric score and red annotations; teacher approval required.",
+    "unreadable": "Do not guess. Mark for teacher review."
+  }
+}

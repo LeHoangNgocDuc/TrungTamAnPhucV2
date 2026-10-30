@@ -1,0 +1,11 @@
+WEBQUANLY V4.22 - OMR + HANDWRITING ANNOTATION
+
+1. Muc A: nhan dien OMR o to A/B/C/D.
+2. Muc B: nhan dien OMR Dung/Sai theo tung y a/b/c/d.
+3. Muc C: doc tra loi ngan viet tay, backend tu doi chieu dap an.
+4. Muc D: AI cham tu luan theo rubric/loi giai, tao dau ✓/✗ va nhan xet ngan mau do.
+5. Giao vien xem/chinh/xoa/them annotation truoc khi duyet.
+6. Chi bai APPROVED moi hien cho phu huynh.
+7. Phu huynh xem bai da cham sau khi xac thuc dung SĐT; file Drive khong public.
+8. Ho tro anh va PDF; PDF duoc render tren trinh duyet bang PDF.js khi mo viewer.
+9. Khong thay doi gateway Zalo trong ban nay.
