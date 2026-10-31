@@ -4,7 +4,7 @@
   <base target="_top">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AN PHÚC EDUCATION | Hệ Thống Quản Lý V4.25</title>
+  <title>AN PHÚC EDUCATION | Hệ Thống Quản Lý V4.27</title>
   
   <!-- Font Be Vietnam Pro & Bootstrap Icons -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -447,7 +447,7 @@
 
 
     /* ============================================================
-       V4.25 - AUTH UX + PARENT PORTAL 2026
+       V4.27 - AUTH UX + PARENT PORTAL 2026
        ============================================================ */
     .login-modal-card{max-width:460px!important;border:1px solid rgba(148,163,184,.25);border-radius:28px!important;padding:34px!important;box-shadow:0 32px 90px rgba(15,23,42,.30)!important;background:rgba(255,255,255,.98)!important}
     .login-shield{width:70px;height:70px;border-radius:23px;background:linear-gradient(145deg,#DBEAFE,#E0E7FF);box-shadow:inset 0 0 0 1px rgba(37,99,235,.08),0 12px 30px rgba(37,99,235,.12)}
@@ -747,11 +747,11 @@
 
 
 
-    <!-- PANEL CHẤM BÀI AI V4.25 -->
+    <!-- PANEL CHẤM BÀI AI V4.27 -->
     <div id="ai" class="panel">
       <div class="ai-shell">
         <section class="ai-hero">
-          <div><h2><i class="bi bi-stars"></i> Chấm bài tự động V4.25</h2><p>A/B đọc ô tô OMR • C/D đọc chữ viết tay • AI ghi nhận xét đỏ lên bài • Giáo viên duyệt • Phụ huynh xem bài đã chấm.</p></div>
+          <div><h2><i class="bi bi-stars"></i> Chấm bài tự động V4.27</h2><p>A/B đọc ô tô OMR • C/D đọc chữ viết tay • AI ghi nhận xét đỏ lên bài • Giáo viên duyệt • Phụ huynh xem bài đã chấm.</p></div>
           <div class="ai-version">Bắt buộc GV duyệt</div>
         </section>
 
@@ -790,7 +790,7 @@
                 <label>Ngày<input id="ai-import-date" type="date"></label>
                 <label>Loại<select id="ai-import-type"><option value="15P">Kiểm tra 15 phút</option><option value="DINH_KY">Định kỳ</option><option value="BAI_TAP">Bài tập</option><option value="THI_THU_10">Thi thử vào 10</option></select></label>
                 <label>Tổng điểm<input id="ai-import-total" type="number" min="1" max="100" step="0.25" value="10" onchange="aiPreviewExamJson()"></label>
-                <div class="span4" style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn" type="button" onclick="document.getElementById('ai-import-json-file').click()"><i class="bi bi-folder2-open"></i> Chọn file JSON</button><button class="btn btn-primary" type="button" onclick="aiPreviewExamJson()"><i class="bi bi-eye"></i> Đọc & xem trước</button><button id="ai-import-create-btn" class="btn btn-success" type="button" onclick="aiCreateExamFromJson()" disabled><i class="bi bi-magic"></i> Tạo đề tự động</button></div>
+                <div class="span4"><div id="ai-module-health" class="mini-note" style="margin:0;padding:10px 12px;border:1px solid #DBEAFE;background:#F8FBFF">Đang kiểm tra module Chấm bài...</div></div><div class="span4" style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn" type="button" onclick="document.getElementById('ai-import-json-file').click()"><i class="bi bi-folder2-open"></i> Chọn file JSON</button><button class="btn btn-primary" type="button" onclick="aiPreviewExamJson()"><i class="bi bi-eye"></i> Đọc & xem trước</button><button id="ai-import-create-btn" class="btn btn-success" type="button" onclick="aiCreateExamFromJson()" disabled><i class="bi bi-magic"></i> Tạo đề tự động</button></div>
               </div>
               <div id="ai-import-preview" class="ai-help" style="margin-top:10px">Chưa chọn file. Định dạng mẫu: mỗi câu có Id, Type, Question; MC/TF/SA có CorrectAnswer; LA có Explain.</div>
             </div>
@@ -1059,11 +1059,11 @@
 
     <!-- PANEL CÀI ĐẶT -->
     <div id="st" class="panel">
-      <h3 class="section-title"><i class="bi bi-sliders"></i> Cài đặt Hệ thống V4.25</h3>
+      <h3 class="section-title"><i class="bi bi-sliders"></i> Cài đặt Hệ thống V4.27</h3>
       <div style="background:#EFF6FF;border:1px solid #BFDBFE;padding:20px;border-radius:var(--radius-md);margin-bottom:20px;">
-        <h4 style="color:var(--primary-dark);margin-bottom:8px;"><i class="bi bi-database-check"></i> CẬP NHẬT CẤU TRÚC & TỰ ĐỘNG HÓA V4.25</h4>
+        <h4 style="color:var(--primary-dark);margin-bottom:8px;"><i class="bi bi-database-check"></i> CẬP NHẬT CẤU TRÚC & TỰ ĐỘNG HÓA V4.27</h4>
         <p style="color:var(--text-muted);margin-bottom:12px;">Chạy một lần để giữ toàn bộ bảo mật V4.8 và bổ sung nhập dữ liệu Kiểm tra trực tiếp từ Excel, liên kết bài kiểm tra và thông báo đăng ký về Zalo Trung tâm.</p>
-        <button class="btn btn-primary" onclick="runSetupV4()"><i class="bi bi-tools"></i> Chạy setup V4.25</button>
+        <button class="btn btn-primary" onclick="runSetupV4()"><i class="bi bi-tools"></i> Chạy setup V4.27</button>
       </div>
 
 
@@ -1119,7 +1119,7 @@
           <h4 style="margin:0;color:#B91C1C"><i class="bi bi-send-check-fill"></i> Chẩn đoán Zalo Gateway</h4>
           <button class="btn" style="background:#FEE2E2;color:#991B1B" onclick="loadZaloDiagnostics()"><i class="bi bi-activity"></i> Kiểm tra</button>
         </div>
-        <div class="mini-note" style="margin-top:8px">V4.25 tiếp tục dùng kết nối Zalo đơn giản: Apps Script gửi JSON trực tiếp qua Ngrok đến một file <b>zalo_server.py</b>. Không còn API key/fingerprint ở Gateway nên tránh lỗi 401 do lệch khóa.</div>
+        <div class="mini-note" style="margin-top:8px">V4.27 tiếp tục dùng kết nối Zalo đơn giản: Apps Script gửi JSON trực tiếp qua Ngrok đến một file <b>zalo_server.py</b>. Không còn API key/fingerprint ở Gateway nên tránh lỗi 401 do lệch khóa.</div>
         <div class="schedule-editor-grid" style="margin-top:10px">
           <input id="zalo-gateway-url-admin" type="url" placeholder="https://...ngrok-free.dev">
           <div id="zalo-diag-box" class="mini-note" style="padding:12px;background:#fff;border:1px solid var(--border);border-radius:9px">Chưa kiểm tra Gateway.</div>
@@ -1186,7 +1186,7 @@
       <div id="login-error" class="login-inline-error" role="alert" style="display:none"></div>
       <div class="login-actions"><button type="button" class="btn login-cancel" onclick="closeLoginModal()">Hủy</button><button id="login-submit-btn" type="submit" class="btn btn-primary"><i class="bi bi-box-arrow-in-right"></i> Đăng nhập</button></div>
     </form>
-    <div class="login-security-note"><i class="bi bi-shield-check"></i> Xác thực tại máy chủ, token phiên 12 giờ. Nếu vừa nâng V4.25, hãy chạy <b>setupSystemV425()</b> một lần trong Apps Script trước khi đăng nhập.</div>
+    <div class="login-security-note"><i class="bi bi-shield-check"></i> Xác thực tại máy chủ, token phiên 12 giờ. Nếu vừa nâng V4.27, hãy chạy <b>setupSystemV427()</b> một lần trong Apps Script trước khi đăng nhập.</div>
   </div>
 </div>
 
@@ -1240,10 +1240,10 @@
   // ============================================
   // CẤU HÌNH API - LIÊN KẾT VỚI GOOGLE SHEET
   // ============================================
-  const API_URL = "https://script.google.com/macros/s/AKfycbzFxT7jgWJ9HGbQ95y_3VHt57ttGs8KbE54uVcQVHOt-Al0bt7hNzTroF4s_txjrxYw/exec";
-  const FRONTEND_VERSION = 'V4.25';
+  const API_URL = "https://script.google.com/macros/s/AKfycby4WGOkep6KdYheiYdBb36qwDdx7HexdV0gihZMhy4FgcSyq2BdcypXAN5IROr4Zv6e/exec";
+  const FRONTEND_VERSION = 'V4.27';
   const CENTER_INFO = {
-    address: '30/11D Phước Tường, Phước Long, Nam Nha Trang',
+    address: '30/11A Phước Tường, Phước Long, Nam Nha Trang',
     phone: '0972466347',
     zalo: '0972466347',
     maps_url: 'https://www.google.com/maps/search/?api=1&query=30%2F11D%20Ph%C6%B0%E1%BB%9Bc%20T%C6%B0%E1%BB%9Dng%2C%20Ph%C6%B0%E1%BB%9Bc%20Long%2C%20Nam%20Nha%20Trang'
@@ -1265,10 +1265,10 @@
   let EXAM_STATE = { grade:'', type:'regular', launchBase:'' };
   const CLIENT_GET_CACHE = new Map();
   const TAB_LOADED = { hs:true, hp:false, tk:false, ds:false, ai:false, tl:false, st:false };
-  const PUBLIC_GET_ACTIONS = new Set(['validateAdminSession','getPublicBootstrap','getPublicSchedule','getPublicExams','getPublicSystemStatus','publicPing','publicFindStudentByName','getParentGradedExam','getParentGradedExamAsset']);
+  const PUBLIC_GET_ACTIONS = new Set(['validateAdminSession','getPublicBootstrap','getPublicSchedule','getPublicExams','getPublicSystemStatus','publicPing','systemManifest','publicFindStudentByName','getParentGradedExam','getParentGradedExamAsset']);
   const EXAM_STUDENT_URL = 'https://anphuceducation.netlify.app/student';
   const PUBLIC_POST_ACTIONS = new Set(['adminLogin','publicVerifyStudentPhone','submitRegistration']);
-  const EXPECTED_BACKEND_VERSION='V4.25';
+  const EXPECTED_BACKEND_VERSION='V4.27';
   const PUBLIC_API_STATE={status:'unknown',version:'',message:''};
   let CHAT_SEND_BUSY=false;
   let PUBLIC_PORTAL_READY=false;
@@ -1307,16 +1307,17 @@
   async function checkPublicBackend_(showOk=false){
     try{
       const r=await rawPublicPing_(); const v=String(r?.data?.version||r?.meta?.version||''); PUBLIC_API_STATE.version=v;
-      if(v!==EXPECTED_BACKEND_VERSION){setPublicApiStatus_('warn',`⚠️ Giao diện ${EXPECTED_BACKEND_VERSION} đang kết nối Backend <b>${escapeHtml(v||'không xác định')}</b>. Hãy chạy <b>setupSystemV425()</b>, sau đó Deploy <b>New Version</b> của Code.gs V4.25 rồi tải lại trang.`);return false;}
+      if(v!==EXPECTED_BACKEND_VERSION){setPublicApiStatus_('warn',`⚠️ Giao diện ${EXPECTED_BACKEND_VERSION} đang kết nối Backend <b>${escapeHtml(v||'không xác định')}</b>. Hãy chạy <b>setupSystemV427()</b>, sau đó Deploy <b>New Version</b> của Code.gs V4.27 rồi tải lại trang.`);return false;}
       if(showOk)setPublicApiStatus_('ok',`✅ Backend ${escapeHtml(v)} đang hoạt động bình thường.`); else {const el=document.getElementById('public-api-status');if(el)el.style.display='none';}
       PUBLIC_API_STATE.status='ok';return true;
     }catch(e){setPublicApiStatus_('error',`❌ Không kết nối được máy chủ Google Apps Script. Hãy kiểm tra <b>Deploy → Manage deployments → Execute as Me → Who has access: Anyone</b> và bảo đảm API_URL đang dùng đúng link <b>/exec</b>.`);return false;}
   }
 
+  const CORE_COMPAT_ACTIONS = new Set(['adminLogin','validateAdminSession','publicFindStudentByName','findParentStudentCandidates','publicVerifyStudentPhone','verifyParentStudent','getPublicBootstrap','getPublicRegistrationInfo','getPublicSchedule','getPublicExams','getPublicSystemStatus','systemManifest','submitRegistration']);
   async function callAPI(action, params = {}, method = 'GET') {
     if(action!=='publicPing' && PUBLIC_API_STATE.status!=='ok') {
       const ready=await checkPublicBackend_(false);
-      if(!ready) throw new Error(`Backend chưa đồng bộ ${EXPECTED_BACKEND_VERSION}. Vui lòng cập nhật đầy đủ Apps Script V4.25, chạy setupSystemV425() rồi Deploy New Version.`);
+      if(!ready && !CORE_COMPAT_ACTIONS.has(action)) throw new Error(`Backend chưa đồng bộ ${EXPECTED_BACKEND_VERSION}. Vui lòng cập nhật Apps Script V4.27, chạy setupSystemV427() rồi Deploy New Version.`);
     }
     let url=API_URL; const options={method,redirect:'follow'}; const payload={...(params||{})};
     payload._client_id=getSecurityClientId();
@@ -1330,13 +1331,13 @@
     else{options.headers={'Content-Type':'text/plain;charset=utf-8'};options.body=JSON.stringify({action,...payload});}
 
     const controller=new AbortController();options.signal=controller.signal;const actionTimeout = action==='gradeExamSubmissionAI'?120000:(action==='uploadExamSubmissionFile'?70000:((action==='getExamSubmissionAsset'||action==='getParentGradedExamAsset')?60000:(isPublic?20000:30000)));const timeoutId=setTimeout(()=>controller.abort(),actionTimeout);const started=performance.now();let response;
-    try{response=await fetch(url,options);}catch(e){if(e.name==='AbortError'){if(isPublic&&action!=='publicPing'){await checkPublicBackend_(false);if(PUBLIC_API_STATE.status==='ok')throw new Error('Backend đang kết nối nhưng tác vụ dữ liệu phản hồi quá chậm. Hãy chạy setupSystemV425() một lần rồi Deploy New Version.');}throw new Error('Không kết nối được máy chủ. Vui lòng kiểm tra trạng thái Backend ở đầu Cổng phụ huynh.');}throw e;}finally{clearTimeout(timeoutId);}
+    try{response=await fetch(url,options);}catch(e){if(e.name==='AbortError'){if(isPublic&&action!=='publicPing'){await checkPublicBackend_(false);if(PUBLIC_API_STATE.status==='ok')throw new Error('Backend đang kết nối nhưng tác vụ dữ liệu phản hồi quá chậm. Hãy chạy setupSystemV427() một lần rồi Deploy New Version.');}throw new Error('Không kết nối được máy chủ. Vui lòng kiểm tra trạng thái Backend ở đầu Cổng phụ huynh.');}throw e;}finally{clearTimeout(timeoutId);}
     const text=await response.text();let result;try{result=JSON.parse(text);}catch(e){throw new Error('API không trả JSON. HTTP '+response.status+': '+text.slice(0,100));}
     if(!response.ok)throw new Error(result.message||'HTTP '+response.status);
     if(result.success===false){ if(/UNAUTHORIZED|Phiên đăng nhập/i.test(result.message||'')) logoutAdmin(false); throw new Error(result.message||'Thao tác thất bại'); }
-    const totalMs=Math.round(performance.now()-started);if((result.meta?.server_ms||totalMs)>800)console.info(`[V4.25] ${action}: server ${result.meta?.server_ms??'?'} ms, tổng ${totalMs} ms`);
+    const totalMs=Math.round(performance.now()-started);if((result.meta?.server_ms||totalMs)>800)console.info(`[V4.27] ${action}: server ${result.meta?.server_ms??'?'} ms, tổng ${totalMs} ms`);
     if(method==='GET')CLIENT_GET_CACHE.set(cacheKey,{value:result,expires:Date.now()+12000});
-    else{clearClientApiCache();TAB_LOADED.tk=false;try{sessionStorage.removeItem('anphuc_v425_initial');}catch(e){}const qActions=new Set(['saveAttendance','sendTuitionMessage','sendBulkTuitionReminders','sendClassLessonReport','sendBulkClassLessonReports','sendStudentSituationReport','sendBulkStudentSituationReports','sendMultiMonthTuitionReminder','sendBulkMultiMonthTuitionReminders','runTuitionReminderNow','retryUnreachableZaloStudent','saveScores','reviewExamSubmission','sendExamResultToParent','sendApprovedExamResultsBulk','saveAndSendHomework','processZaloQueue','submitRegistration']);if(qActions.has(action)&&isAdminAuthenticated())setTimeout(refreshZaloQueueStatus,250);}
+    else{clearClientApiCache();TAB_LOADED.tk=false;try{sessionStorage.removeItem('anphuc_v427_initial');}catch(e){}const qActions=new Set(['saveAttendance','sendTuitionMessage','sendBulkTuitionReminders','sendClassLessonReport','sendBulkClassLessonReports','sendStudentSituationReport','sendBulkStudentSituationReports','sendMultiMonthTuitionReminder','sendBulkMultiMonthTuitionReminders','runTuitionReminderNow','retryUnreachableZaloStudent','saveScores','reviewExamSubmission','sendExamResultToParent','sendApprovedExamResultsBulk','saveAndSendHomework','processZaloQueue','submitRegistration']);if(qActions.has(action)&&isAdminAuthenticated())setTimeout(refreshZaloQueueStatus,250);}
     return result;
   }
 
@@ -1345,6 +1346,7 @@
   window.onload = async function() {
     showLandingMode();
     setTimeout(()=>checkPublicBackend_(false).catch(()=>{}),60);
+    setTimeout(()=>loadSystemManifestV427_(false).catch(()=>{}),250);
     // Không tự tải dữ liệu Admin khi vào web. Phiên cũ chỉ được kiểm tra khi bấm Cổng Giáo viên.
   };
 
@@ -1365,10 +1367,10 @@
     const nameEl=document.getElementById('admin-display-name');if(nameEl)nameEl.innerText=username||'admin';initAdminControls();
     const today=new Date();
     try{
-      const warm=JSON.parse(sessionStorage.getItem('anphuc_v425_initial')||'null');
+      const warm=JSON.parse(sessionStorage.getItem('anphuc_v427_initial')||'null');
       if(warm&&Date.now()-Number(warm.saved_at||0)<5*60*1000&&warm.data)renderInitialData(warm.data);
     }catch(e){}
-    try{const r=await callAPI('getInitialData',{month:today.getMonth()+1,year:today.getFullYear(),page:1,pageSize:STUDENT_PAGE_SIZE});const d=r.data||{};renderInitialData(d);try{sessionStorage.setItem('anphuc_v425_initial',JSON.stringify({saved_at:Date.now(),data:d}));}catch(e){}}catch(e){console.error(e);showError(e);}
+    try{const r=await callAPI('getInitialData',{month:today.getMonth()+1,year:today.getFullYear(),page:1,pageSize:STUDENT_PAGE_SIZE});const d=r.data||{};renderInitialData(d);try{sessionStorage.setItem('anphuc_v427_initial',JSON.stringify({saved_at:Date.now(),data:d}));}catch(e){}}catch(e){console.error(e);showError(e);}
     refreshZaloQueueStatus();
   }
 
@@ -1395,19 +1397,19 @@
     try{
       loading(true);if(btn)btn.disabled=true;
       const backendOk=await checkPublicBackend_(false);
-      if(!backendOk)throw new Error(`Backend chưa đồng bộ ${EXPECTED_BACKEND_VERSION}. Hãy chạy setupSystemV425() và Deploy New Version.`);
+      if(!backendOk)console.warn('Backend version chưa đồng bộ; vẫn thử đăng nhập core để phục hồi hệ thống.');
       const r=await callAPI('adminLogin',{username,password},'POST');const x=r.data||{};
-      if(!x.authenticated||!x.token)throw new Error('Máy chủ không trả phiên đăng nhập hợp lệ. Hãy chạy setupSystemV425() rồi Deploy lại.');
+      if(!x.authenticated||!x.token)throw new Error('Máy chủ không trả phiên đăng nhập hợp lệ. Hãy chạy setupSystemV427() rồi Deploy lại.');
       sessionStorage.setItem('ap_admin_auth','1');sessionStorage.setItem('ap_admin_token',x.token);
       closeLoginModal();document.getElementById('login-pass').value='';await enterAdminMode(x.username||username);showToast('Đăng nhập thành công.');
-    }catch(e){let msg=e?.message||String(e);if(/is not defined|Thiếu module/i.test(msg))msg='Backend Apps Script chưa đồng bộ đủ V4.25. Hãy thay toàn bộ Code.gs + các module trong bộ V4.25, chạy setupSystemV425() rồi Deploy New Version. Chi tiết kỹ thuật: '+msg;setLoginError_(msg);showError(new Error(msg));}finally{loading(false);if(btn)btn.disabled=false;}
+    }catch(e){let msg=e?.message||String(e);if(/is not defined|Thiếu module/i.test(msg))msg='Backend Apps Script chưa đồng bộ V4.27. Hãy thay Code.gs V4.27, chạy setupSystemV427() rồi Deploy New Version. Module chấm bài thiếu sẽ không còn chặn đăng nhập. Chi tiết kỹ thuật: '+msg;setLoginError_(msg);showError(new Error(msg));}finally{loading(false);if(btn)btn.disabled=false;}
   }
-  async function logoutAdmin(callServer=true){const token=getAdminToken();if(callServer&&token)try{await callAPI('adminLogout',{},'POST');}catch(e){}try{sessionStorage.removeItem('ap_admin_auth');sessionStorage.removeItem('ap_admin_token');sessionStorage.removeItem('anphuc_v425_initial');}catch(e){}clearClientApiCache();showPublicMode();}
+  async function logoutAdmin(callServer=true){const token=getAdminToken();if(callServer&&token)try{await callAPI('adminLogout',{},'POST');}catch(e){}try{sessionStorage.removeItem('ap_admin_auth');sessionStorage.removeItem('ap_admin_token');sessionStorage.removeItem('anphuc_v427_initial');}catch(e){}clearClientApiCache();showPublicMode();}
   function previewPublicPortal(){window.open(location.origin+location.pathname,'_blank','noopener');}
 
   function parentFriendlyError_(error){
     const raw=String(error?.message||error||'Có lỗi xảy ra.');
-    if(/is not defined|ReferenceError|Thiếu module/i.test(raw)) return 'Hệ thống đang cập nhật chưa đồng bộ. Vui lòng tải lại trang sau khi quản trị viên hoàn tất cập nhật V4.25.';
+    if(/is not defined|ReferenceError|Thiếu module/i.test(raw)) return 'Hệ thống đang cập nhật chưa đồng bộ. Vui lòng tải lại trang sau khi quản trị viên hoàn tất cập nhật V4.27.';
     if(/Backend chưa đồng bộ|không kết nối được máy chủ/i.test(raw)) return raw;
     return raw;
   }
@@ -2533,10 +2535,10 @@
   }
 
   async function runSetupV4() {
-    if (!confirm('Chạy setup V4.25 để bật A/B OMR tô màu, C/D chữ viết tay, nhận xét đỏ trên bài, Cổng Phụ huynh/Giáo viên và giữ nguyên dữ liệu hiện có?')) return;
+    if (!confirm('Chạy setup V4.27 để bật A/B OMR tô màu, C/D chữ viết tay, nhận xét đỏ trên bài, Cổng Phụ huynh/Giáo viên và giữ nguyên dữ liệu hiện có?')) return;
     try {
       loading(true);
-      const r = await callAPI('setupSystemV425', {}, 'POST');
+      const r = await callAPI('setupSystemV427', {}, 'POST');
       const x = r.data || {};
       showToast(`${x.message || 'Setup hoàn tất.'}${x.duplicate_queue_rows_marked ? ` Đã khóa ${x.duplicate_queue_rows_marked} dòng tin trùng.` : ''}${x.duplicate_zalo_triggers_removed ? ` Đã xóa ${x.duplicate_zalo_triggers_removed} trigger Zalo trùng.` : ''}`);
     } catch(e) { showError(e); } finally { loading(false); }
@@ -2569,8 +2571,32 @@
   async function aiImportFileChanged(file){if(!file){AI_IMPORT_JSON_TEXT='';AI_IMPORT_PREVIEW=null;return;}if(file.size>2*1024*1024){showToast('File đề JSON lớn hơn 2MB.','error');return;}try{AI_IMPORT_JSON_TEXT=await aiReadTextFile(file);await aiPreviewExamJson();}catch(e){showError(e);}}
   function aiImportTypePoints(){return{MC:Number(document.getElementById('ai-import-score-mc')?.value||0),TF:Number(document.getElementById('ai-import-score-tf')?.value||0),SA:Number(document.getElementById('ai-import-score-sa')?.value||0),LA:Number(document.getElementById('ai-import-score-la')?.value||0)};}
   function aiRenderImportPreview(x){AI_IMPORT_PREVIEW=x;const s=x?.summary||{},c=s.counts||{},p=s.type_points||{},q=x?.questions||[];if(!document.getElementById('ai-import-title').value)document.getElementById('ai-import-title').value=s.suggested_title||'';const preview=document.getElementById('ai-import-preview');preview.innerHTML=`<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:7px;margin-bottom:9px"><div><b>${s.question_count||0}</b><br>Câu</div><div><b>${c.MC||0}</b><br>MC</div><div><b>${c.TF||0}</b><br>TF</div><div><b>${c.SA||0}</b><br>SA</div><div><b>${c.LA||0}</b><br>LA</div></div><div style="display:grid;grid-template-columns:repeat(4,minmax(85px,1fr));gap:7px"><label>MC điểm<input id="ai-import-score-mc" type="number" step="0.01" min="0" value="${p.MC??0}"></label><label>TF điểm<input id="ai-import-score-tf" type="number" step="0.01" min="0" value="${p.TF??0}"></label><label>SA điểm<input id="ai-import-score-sa" type="number" step="0.01" min="0" value="${p.SA??0}"></label><label>LA điểm<input id="ai-import-score-la" type="number" step="0.01" min="0" value="${p.LA??0}"></label></div><div style="margin-top:8px"><b>Nhận diện:</b> ${escapeHtml(s.subject||'')} khối ${escapeHtml(s.grade||'')} · Tổng ${aiFmtScore(s.total_score)} điểm. Có thể chỉnh phân điểm 4 ô trên trước khi tạo đề.</div><details style="margin-top:8px"><summary style="cursor:pointer;font-weight:700">Xem ${q.length} câu đã nhận diện</summary><div style="max-height:260px;overflow:auto;margin-top:6px">${q.map((z,i)=>`<div style="padding:5px 0;border-bottom:1px dashed #CBD5E1"><b>${escapeHtml(z.id)} · ${escapeHtml(z.type)}</b> ${escapeHtml(z.level||'')} — ${escapeHtml(z.question||'')}</div>`).join('')}</div></details>`;document.getElementById('ai-import-create-btn').disabled=false;}
-  async function aiPreviewExamJson(){if(!AI_IMPORT_JSON_TEXT)return;try{const total=Number(document.getElementById('ai-import-total').value||10);const r=await callAPI('previewExamJsonDefinition',{json_text:AI_IMPORT_JSON_TEXT,total_score:total},'POST');aiRenderImportPreview(r.data||{});}catch(e){AI_IMPORT_PREVIEW=null;document.getElementById('ai-import-create-btn').disabled=true;document.getElementById('ai-import-preview').textContent=e.message;showError(e);}}
-  async function aiCreateExamFromJson(){if(!AI_IMPORT_JSON_TEXT||!AI_IMPORT_PREVIEW)return showToast('Hãy đọc file JSON trước.','error');try{loading(true);const total=Number(document.getElementById('ai-import-total').value||10),p=aiImportTypePoints(),sum=p.MC+p.TF+p.SA+p.LA;if(Math.abs(sum-total)>0.02)throw new Error(`Tổng phân điểm hiện là ${aiFmtScore(sum)}, phải bằng ${aiFmtScore(total)}.`);const r=await callAPI('importExamJsonDefinition',{json_text:AI_IMPORT_JSON_TEXT,title:document.getElementById('ai-import-title').value.trim(),className:document.getElementById('ai-import-class').value.trim(),exam_date:document.getElementById('ai-import-date').value,exam_type:document.getElementById('ai-import-type').value,total_score:total,type_points:p},'POST');AI_CURRENT_EXAM=r.data;showToast('Đã tự nhận diện đề, đáp án và tạo barem. Có thể tải bài học sinh để chấm ngay.');await aiLoadExams();document.getElementById('ai-exam-select').value=AI_CURRENT_EXAM.exam_id;await aiSelectExam(AI_CURRENT_EXAM.exam_id);await aiLoadDashboard();}catch(e){showError(e);}finally{loading(false);}}
+  let EXAM_MANIFEST_CACHE=null;
+  async function loadSystemManifestV427_(force=false){
+    if(EXAM_MANIFEST_CACHE&&!force)return EXAM_MANIFEST_CACHE;
+    try{
+      const r=await callAPI('systemManifest',{_t:Date.now()},'GET');
+      EXAM_MANIFEST_CACHE=r.data||{};
+      renderExamModuleHealthV427_(EXAM_MANIFEST_CACHE);
+      return EXAM_MANIFEST_CACHE;
+    }catch(e){
+      EXAM_MANIFEST_CACHE=null;
+      renderExamModuleHealthV427_({exam_ready:false,missing_exam:[e.message||String(e)]});
+      throw e;
+    }
+  }
+  function renderExamModuleHealthV427_(m){
+    const el=document.getElementById('ai-module-health');if(!el)return;
+    if(m&&m.exam_ready){el.style.borderColor='#BBF7D0';el.style.background='#F0FDF4';el.style.color='#166534';el.innerHTML=`✅ Module Chấm bài đã đồng bộ <b>${escapeHtml(m.version||'V4.27')}</b> • Build ${escapeHtml(m.build||'')}`;return;}
+    const miss=Array.isArray(m?.missing_exam)?m.missing_exam:[];el.style.borderColor='#FDE68A';el.style.background='#FFFBEB';el.style.color='#92400E';el.innerHTML=`⚠️ Module Chấm bài chưa đồng bộ.${miss.length?'<br><small>'+miss.map(escapeHtml).join('<br>')+'</small>':''}<br><button class="btn" style="margin-top:8px" type="button" onclick="loadSystemManifestV427_(true)"><i class="bi bi-arrow-clockwise"></i> Kiểm tra lại module</button>`;
+  }
+  async function ensureExamModulesV427_(){
+    const m=await loadSystemManifestV427_(false);
+    if(!m||!m.exam_ready)throw new Error('Module Chấm bài chưa đồng bộ V4.27. Hãy dán đủ 7 module Exam/AI trong bộ V4.27 vào cùng project Apps Script, Save tất cả rồi Deploy New Version.');
+    return m;
+  }
+  async function aiPreviewExamJson(){if(!AI_IMPORT_JSON_TEXT)return;try{await ensureExamModulesV427_();const total=Number(document.getElementById('ai-import-total').value||10);const r=await callAPI('previewExamJsonDefinition',{json_text:AI_IMPORT_JSON_TEXT,total_score:total},'POST');aiRenderImportPreview(r.data||{});}catch(e){AI_IMPORT_PREVIEW=null;document.getElementById('ai-import-create-btn').disabled=true;document.getElementById('ai-import-preview').textContent=e.message;showError(e);}}
+  async function aiCreateExamFromJson(){if(!AI_IMPORT_JSON_TEXT||!AI_IMPORT_PREVIEW)return showToast('Hãy đọc file JSON trước.','error');try{await ensureExamModulesV427_();loading(true);const total=Number(document.getElementById('ai-import-total').value||10),p=aiImportTypePoints(),sum=p.MC+p.TF+p.SA+p.LA;if(Math.abs(sum-total)>0.02)throw new Error(`Tổng phân điểm hiện là ${aiFmtScore(sum)}, phải bằng ${aiFmtScore(total)}.`);const r=await callAPI('importExamJsonDefinition',{json_text:AI_IMPORT_JSON_TEXT,title:document.getElementById('ai-import-title').value.trim(),className:document.getElementById('ai-import-class').value.trim(),exam_date:document.getElementById('ai-import-date').value,exam_type:document.getElementById('ai-import-type').value,total_score:total,type_points:p},'POST');AI_CURRENT_EXAM=r.data;showToast('Đã tự nhận diện đề, đáp án và tạo barem. Có thể tải bài học sinh để chấm ngay.');await aiLoadExams();document.getElementById('ai-exam-select').value=AI_CURRENT_EXAM.exam_id;await aiSelectExam(AI_CURRENT_EXAM.exam_id);await aiLoadDashboard();}catch(e){showError(e);}finally{loading(false);}}
   async function aiLoadSettings(){try{const r=await callAPI('getAIGradingSettings');const x=r.data||{};document.getElementById('ai-model').value=x.model||'gemini-3.8-flash';document.getElementById('ai-threshold').value=x.review_threshold||75;document.getElementById('ai-require-review').value=String(x.require_teacher_review!==false);document.getElementById('ai-key-status').innerHTML=x.api_key_configured?`✅ API key đã lưu ${escapeHtml(x.api_key_hint||'')}.`:'⚠️ Chưa có Gemini API key. Nhập key rồi bấm Lưu AI.';}catch(e){document.getElementById('ai-key-status').textContent=e.message;}}
   async function aiSaveSettings(){try{loading(true);const r=await callAPI('saveAIGradingSettings',{provider:'gemini',api_key:document.getElementById('ai-api-key').value.trim(),model:document.getElementById('ai-model').value.trim(),review_threshold:document.getElementById('ai-threshold').value,require_teacher_review:document.getElementById('ai-require-review').value},'POST');document.getElementById('ai-api-key').value='';showToast('Đã lưu cấu hình AI.');await aiLoadSettings();}catch(e){showError(e);}finally{loading(false);}}
   async function aiLoadDashboard(){try{const r=await callAPI('getExamDashboard');const x=r.data||{},st=x.stats||{};document.getElementById('ai-m-exams').textContent=x.exam_count??0;document.getElementById('ai-m-total').textContent=st.total??0;document.getElementById('ai-m-done').textContent=st.ai_done??0;document.getElementById('ai-m-review').textContent=st.review_needed??0;document.getElementById('ai-m-approved').textContent=st.approved??0;document.getElementById('ai-m-sent').textContent=st.parent_sent??0;}catch(e){console.warn(e);}}
@@ -2648,7 +2674,7 @@
   async function examViewerNextAsset(){const n=(EXAM_VIEWER.meta?.assets||[]).length;if(EXAM_VIEWER.assetIndex<n-1){EXAM_VIEWER.assetIndex++;await examViewerLoadAsset();}}
   function examViewerToggleAddNote(){EXAM_VIEWER.addMode=!EXAM_VIEWER.addMode;const b=document.getElementById('exam-paper-add-note');if(b)b.innerHTML=EXAM_VIEWER.addMode?'<i class="bi bi-cursor-fill"></i> Bấm lên bài để đặt':'<i class="bi bi-pencil-square"></i> Thêm ghi chú';}
   function examViewerResetAnnotations(){EXAM_VIEWER.annotations=JSON.parse(JSON.stringify(EXAM_VIEWER.originalAnnotations||[]));examViewerRenderAnnotations();}
-  async function examViewerSaveAnnotations(){if(EXAM_VIEWER.mode!=='teacher')return;try{loading(true);await callAPI('saveExamSubmissionAnnotations',{submission_id:EXAM_VIEWER.submissionId,annotation:{version:'V4.25',items:EXAM_VIEWER.annotations}},'POST');EXAM_VIEWER.originalAnnotations=JSON.parse(JSON.stringify(EXAM_VIEWER.annotations));showToast('Đã lưu dấu chấm/nhận xét trên bài.');}catch(e){showError(e);}finally{loading(false);}}
+  async function examViewerSaveAnnotations(){if(EXAM_VIEWER.mode!=='teacher')return;try{loading(true);await callAPI('saveExamSubmissionAnnotations',{submission_id:EXAM_VIEWER.submissionId,annotation:{version:'V4.27',items:EXAM_VIEWER.annotations}},'POST');EXAM_VIEWER.originalAnnotations=JSON.parse(JSON.stringify(EXAM_VIEWER.annotations));showToast('Đã lưu dấu chấm/nhận xét trên bài.');}catch(e){showError(e);}finally{loading(false);}}
 
 </script>
 </body>
