@@ -1806,7 +1806,7 @@
       <div id="login-error" class="login-inline-error" role="alert" style="display:none"></div>
       <div class="login-actions"><button type="button" class="btn login-cancel" onclick="closeLoginModal()">Hủy</button><button id="login-submit-btn" type="submit" class="btn btn-primary"><i class="bi bi-box-arrow-in-right"></i> Đăng nhập</button></div>
     </form>
-    <div class="login-security-note"><i class="bi bi-shield-check"></i> Xác thực tại máy chủ, token phiên 12 giờ. Nếu vừa nâng V4.27, hãy chạy <b>setupSystemV427()</b> một lần trong Apps Script trước khi đăng nhập.</div>
+    <div class="login-security-note"><i class="bi bi-shield-check"></i> Xác thực tại máy chủ, phiên đăng nhập 12 giờ. Nếu web và Apps Script chưa đồng bộ, cần cập nhật <b>deployment Web app đang sử dụng</b>, không cần đổi mật khẩu. <button type="button" onclick="checkLoginBackendNow()" style="display:block;margin-top:10px;padding:8px 12px;border:1px solid #BFDBFE;border-radius:9px;background:#EFF6FF;color:#1D4ED8;font-weight:700;cursor:pointer"><i class="bi bi-activity"></i> Kiểm tra kết nối Backend</button></div>
   </div>
 </div>
 
@@ -1896,7 +1896,7 @@
   // ============================================
   // CẤU HÌNH API - LIÊN KẾT VỚI GOOGLE SHEET
   // ============================================
-  const API_URL = "https://script.google.com/macros/s/AKfycbyowvXKHzguu53eI9ucGoJMeZtZALwxKDCw23IkV0q8dkG1Y_saRet9uG4Kz0ET71CD7A/exec";
+  const API_URL = "https://script.google.com/macros/s/AKfycbzQeeSQ7WTWLBPdHAUZy_-qyVBJcA4f_VBj9fasF-80TWLFa5AtgBa5UZqVlIdePZjL/exec";
   const FRONTEND_VERSION = 'V4.27';
   const CENTER_INFO = {
     address: '30/11D Phước Tường, Phước Long, Nam Nha Trang',
@@ -1925,7 +1925,8 @@
   const EXAM_STUDENT_URL = 'https://anphuceducation.netlify.app/student';
   const PUBLIC_POST_ACTIONS = new Set(['adminLogin','publicVerifyStudentPhone','submitRegistration']);
   const EXPECTED_BACKEND_VERSION='V4.27';
-  const PUBLIC_API_STATE={status:'unknown',version:'',message:''};
+  const EXPECTED_API_BUILD='ANPHUC_V4285_AUTH_SYNC_20261101';
+  const PUBLIC_API_STATE={status:'unknown',version:'',apiBuild:'',diagnostic:'',message:''};
   let CHAT_SEND_BUSY=false;
   let PUBLIC_PORTAL_READY=false;
 
@@ -1962,18 +1963,37 @@
   }
   async function checkPublicBackend_(showOk=false){
     try{
-      const r=await rawPublicPing_(); const v=String(r?.data?.version||r?.meta?.version||''); PUBLIC_API_STATE.version=v;
-      if(v!==EXPECTED_BACKEND_VERSION){setPublicApiStatus_('warn',`⚠️ Giao diện ${EXPECTED_BACKEND_VERSION} đang kết nối Backend <b>${escapeHtml(v||'không xác định')}</b>. Hãy chạy <b>setupSystemV427()</b>, sau đó Deploy <b>New Version</b> của Code.gs V4.27 rồi tải lại trang.`);return false;}
-      if(showOk)setPublicApiStatus_('ok',`✅ Backend ${escapeHtml(v)} đang hoạt động bình thường.`); else {const el=document.getElementById('public-api-status');if(el)el.style.display='none';}
-      PUBLIC_API_STATE.status='ok';return true;
-    }catch(e){setPublicApiStatus_('error',`❌ Không kết nối được máy chủ Google Apps Script. Hãy kiểm tra <b>Deploy → Manage deployments → Execute as Me → Who has access: Anyone</b> và bảo đảm API_URL đang dùng đúng link <b>/exec</b>.`);return false;}
+      const r=await rawPublicPing_();
+      const v=String(r?.data?.version||r?.meta?.version||'');
+      const build=String(r?.data?.api_build||r?.meta?.api_build||'');
+      const supportsLogin=r?.data?.capabilities?.admin_login===true;
+      PUBLIC_API_STATE.version=v;
+      PUBLIC_API_STATE.apiBuild=build;
+      if(v!==EXPECTED_BACKEND_VERSION || build!==EXPECTED_API_BUILD || !supportsLogin){
+        PUBLIC_API_STATE.diagnostic='Backend Apps Script không đúng bản web hiện tại (nhận: '+(build||v||'không nhận diện')+'). Hãy mở đúng dự án Apps Script An Phúc, dán Code.gs đi kèm bộ V4.28.5, bấm Save rồi Deploy → Manage deployments → Edit → New version → Deploy. Sau đó bảo đảm URL /exec trong index.html trùng với Web app URL mới nhất.';
+        setPublicApiStatus_('warn','⚠️ '+escapeHtml(PUBLIC_API_STATE.diagnostic));
+        return false;
+      }
+      PUBLIC_API_STATE.diagnostic='';
+      if(showOk)setPublicApiStatus_('ok','✅ Backend đúng bản '+escapeHtml(build)+'; đăng nhập máy chủ đã sẵn sàng.');
+      else {const el=document.getElementById('public-api-status');if(el)el.style.display='none';PUBLIC_API_STATE.status='ok';}
+      return true;
+    }catch(e){
+      const detail=String(e?.message||'Không rõ nguyên nhân');
+      PUBLIC_API_STATE.diagnostic=/Action không tồn tại|Action khong ton tai/i.test(detail)
+        ? 'URL Apps Script đang trỏ vào backend CŨ, không hỗ trợ xác thực giáo viên. Hãy cập nhật đúng deployment Web app đang chạy hoặc thay API_URL theo URL /exec mới nhất. Chi tiết: '+detail
+        : 'Không xác minh được Backend Apps Script qua publicPing. Kiểm tra URL /exec, quyền truy cập Web app và deployment mới nhất. Chi tiết: '+detail;
+      setPublicApiStatus_('error','❌ '+escapeHtml(PUBLIC_API_STATE.diagnostic));
+      return false;
+    }
   }
+
 
   const CORE_COMPAT_ACTIONS = new Set(['adminLogin','validateAdminSession','publicFindStudentByName','findParentStudentCandidates','publicVerifyStudentPhone','verifyParentStudent','getPublicBootstrap','getPublicRegistrationInfo','getPublicSchedule','getPublicExams','getPublicSystemStatus','systemManifest','submitRegistration']);
   async function callAPI(action, params = {}, method = 'GET') {
     if(action!=='publicPing' && PUBLIC_API_STATE.status!=='ok') {
       const ready=await checkPublicBackend_(false);
-      if(!ready && !CORE_COMPAT_ACTIONS.has(action)) throw new Error(`Backend chưa đồng bộ ${EXPECTED_BACKEND_VERSION}. Vui lòng cập nhật Apps Script V4.27, chạy setupSystemV427() rồi Deploy New Version.`);
+      if(!ready && (action==='adminLogin' || !CORE_COMPAT_ACTIONS.has(action))) throw new Error(PUBLIC_API_STATE.diagnostic || `Backend chưa đồng bộ ${EXPECTED_BACKEND_VERSION}. Hãy cập nhật Code.gs và Deploy New Version.`);
     }
     let url=API_URL; const options={method,redirect:'follow'}; const payload={...(params||{})};
     payload._client_id=getSecurityClientId();
@@ -2042,7 +2062,22 @@
   function openParentPortal(){const landing=document.getElementById('role-landing');if(landing)landing.style.display='none';document.getElementById('admin-app').style.display='none';document.getElementById('public-app').style.display='block';if(!PUBLIC_PORTAL_READY){PUBLIC_PORTAL_READY=true;initPublicChat();}}
   async function openTeacherPortal(){if(isAdminAuthenticated()){try{loading(true);const check=await callAPI('validateAdminSession',{},'GET');if(check.data?.valid){await enterAdminMode(check.data.username||'admin');return;}}catch(e){console.warn(e);}finally{loading(false);}try{sessionStorage.removeItem('ap_admin_auth');sessionStorage.removeItem('ap_admin_token');}catch(e){}}openLoginModal();}
   function setLoginError_(message){const el=document.getElementById('login-error');if(!el)return;if(!message){el.style.display='none';el.textContent='';return;}el.textContent=String(message);el.style.display='flex';}
-  function openLoginModal(){setLoginError_('');document.getElementById('modal-login').style.display='flex';setTimeout(()=>document.getElementById('login-pass')?.focus(),50);}
+  function openLoginModal(){
+    setLoginError_('');
+    document.getElementById('modal-login').style.display='flex';
+    setTimeout(()=>document.getElementById('login-pass')?.focus(),50);
+    // Kiểm tra API sớm để giáo viên không nhập mật khẩu vào deployment cũ.
+    checkPublicBackend_(false).then(ok=>{
+      if(!ok && document.getElementById('modal-login')?.style.display==='flex')
+        setLoginError_(PUBLIC_API_STATE.diagnostic);
+    });
+  }
+  async function checkLoginBackendNow(){
+    setLoginError_('Đang kiểm tra kết nối Apps Script...');
+    const ok=await checkPublicBackend_(true);
+    if(ok){setLoginError_('');showToast('Backend đã đồng bộ; bạn có thể đăng nhập.');}
+    else setLoginError_(PUBLIC_API_STATE.diagnostic);
+  }
   function closeLoginModal(){setLoginError_('');document.getElementById('modal-login').style.display='none';}
   function toggleLoginPassword(){const input=document.getElementById('login-pass'),icon=document.getElementById('login-eye-icon');if(!input)return;const show=input.type==='password';input.type=show?'text':'password';if(icon)icon.className=show?'bi bi-eye-slash':'bi bi-eye';}
   async function loginAdmin(){
@@ -2053,12 +2088,12 @@
     try{
       loading(true);if(btn)btn.disabled=true;
       const backendOk=await checkPublicBackend_(false);
-      if(!backendOk)console.warn('Backend version chưa đồng bộ; vẫn thử đăng nhập core để phục hồi hệ thống.');
+      if(!backendOk)throw new Error(PUBLIC_API_STATE.diagnostic || 'Backend chưa đồng bộ; chưa gửi yêu cầu đăng nhập.');
       const r=await callAPI('adminLogin',{username,password},'POST');const x=r.data||{};
       if(!x.authenticated||!x.token)throw new Error('Máy chủ không trả phiên đăng nhập hợp lệ. Hãy chạy setupSystemV427() rồi Deploy lại.');
       sessionStorage.setItem('ap_admin_auth','1');sessionStorage.setItem('ap_admin_token',x.token);
       closeLoginModal();document.getElementById('login-pass').value='';await enterAdminMode(x.username||username);showToast('Đăng nhập thành công.');
-    }catch(e){let msg=e?.message||String(e);if(/is not defined|Thiếu module/i.test(msg))msg='Backend Apps Script chưa đồng bộ V4.27. Hãy thay Code.gs V4.27, chạy setupSystemV427() rồi Deploy New Version. Module chấm bài thiếu sẽ không còn chặn đăng nhập. Chi tiết kỹ thuật: '+msg;setLoginError_(msg);showError(new Error(msg));}finally{loading(false);if(btn)btn.disabled=false;}
+    }catch(e){let msg=e?.message||String(e);if(/is not defined|Thiếu module/i.test(msg))msg='Backend Apps Script thiếu module. Hãy cập nhật Code.gs và các module đi kèm dự án, Save, Deploy New Version. Chi tiết kỹ thuật: '+msg;setLoginError_(msg);if(!/Backend Apps Script|Backend chưa|URL Apps Script|publicPing/i.test(msg))showError(new Error(msg));}finally{loading(false);if(btn)btn.disabled=false;}
   }
   async function logoutAdmin(callServer=true){const token=getAdminToken();if(callServer&&token)try{await callAPI('adminLogout',{},'POST');}catch(e){}try{sessionStorage.removeItem('ap_admin_auth');sessionStorage.removeItem('ap_admin_token');sessionStorage.removeItem('anphuc_v427_initial');}catch(e){}clearClientApiCache();showPublicMode();}
   function previewPublicPortal(){window.open(location.origin+location.pathname,'_blank','noopener');}
