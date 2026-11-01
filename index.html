@@ -1082,6 +1082,28 @@
 .score-parent-batch-bar{border:1px solid #bfdbfe;border-radius:16px;background:#eff6ff;padding:14px;margin-top:16px}
 .score-parent-batch-bar p{font-size:13px;color:#475569;line-height:1.5;margin:8px 0 0}
 .score-batch-btn:disabled{opacity:.55;cursor:not-allowed}
+
+
+/* V4.28.4 - infographic pie chart and teacher-controlled detailed scores */
+.score-media-chart-wrap{margin:15px 0 4px;padding:14px;border:1px solid #dbeafe;background:#f7fbff;border-radius:14px}
+.score-media-chart-wrap h4{margin:0 0 10px;color:#17365f;font-size:14px}
+.score-media-chart-layout{display:flex;align-items:center;gap:16px;min-width:0}
+.score-media-chart-img{width:200px;height:200px;flex:0 0 200px;display:block;object-fit:contain}
+.score-media-chart-legend{display:grid;flex:1;gap:8px;font-size:11px}
+.score-media-chart-legend>div{display:flex;align-items:center;gap:7px;color:#334155}
+.score-media-chart-legend i{width:11px;height:11px;flex:0 0 11px;border-radius:3px}
+.score-media-chart-legend b{margin-left:auto;font-variant-numeric:tabular-nums;color:#0f172a}
+.score-media-detail-block{margin-top:15px;break-inside:avoid}
+.score-media-detail-block h4{font-size:14px;color:#17365f;margin:0 0 7px}
+.score-media-detail-table{border-collapse:collapse;width:100%;table-layout:fixed;font-size:10.5px}
+.score-media-detail-table th{background:#eaf1ff;color:#1e3a8a;font-weight:700;text-align:left;padding:8px 6px}
+.score-media-detail-table td{border-bottom:1px solid #e2e8f0;padding:6px;vertical-align:top;overflow-wrap:anywhere}
+.score-media-detail-table th:first-child,.score-media-detail-table td:first-child{width:35px;text-align:center}
+.score-media-detail-table th:nth-child(2){width:185px}
+.score-media-detail-table th:nth-child(3),.score-media-detail-table td:nth-child(3){width:52px;text-align:center;font-weight:700}
+.score-media-detail-table tr:nth-child(even){background:#f8fafc}
+.score-media-detail-table .score-media-point-high{color:#15803d}.score-media-detail-table .score-media-point-low{color:#b91c1c}
+@media(max-width:760px){.score-media-report .score-media-chart-layout{gap:9px}}
 </style>
   <!-- Export bảng điểm: SheetJS & html2canvas, tự tải trước khi sử dụng -->
   <script defer src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
@@ -1792,7 +1814,7 @@
 <!-- Quy trình duyệt tin + ảnh Zalo nhóm: không phát hành khi chưa xác nhận. -->
 <div id="score-media-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="score-media-title" aria-hidden="true">
   <div class="modal-box score-media-dialog">
-    <div class="score-media-top"><div><h3 id="score-media-title"><i class="bi bi-send-check"></i> Duyệt báo cáo gửi nhóm Zalo</h3><p>Chỉ báo cáo đã lưu mới được phát hành. Ảnh mặc định chỉ hiển thị thống kê lớp, không công khai điểm riêng từng em.</p></div><button class="btn" type="button" onclick="closeScoreMediaPreview()" style="background:#f1f5f9"><i class="bi bi-x-lg"></i> Đóng</button></div>
+    <div class="score-media-top"><div><h3 id="score-media-title"><i class="bi bi-send-check"></i> Duyệt báo cáo gửi nhóm Zalo</h3><p>Chỉ báo cáo đã lưu mới được phát hành. Ảnh gồm biểu đồ tròn và phổ điểm lớp; có thể chủ động bật bảng điểm chi tiết trong ảnh sau khi xác nhận quyền chia sẻ.</p></div><button class="btn" type="button" onclick="closeScoreMediaPreview()" style="background:#f1f5f9"><i class="bi bi-x-lg"></i> Đóng</button></div>
     <div class="score-media-layout">
       <section class="score-media-section">
         <h4><i class="bi bi-people-fill"></i> Nhóm nhận và nội dung</h4>
@@ -1800,6 +1822,7 @@
         <div class="score-media-options">
           <label><input id="score-media-text" type="checkbox" checked onchange="scoreMediaOptionsChanged()"><span>Gửi tin nhắn thống kê của lớp</span></label>
           <label><input id="score-media-png" type="checkbox" checked onchange="scoreMediaOptionsChanged()"><span>Gửi ảnh PNG thống kê lớp (không có họ tên từng học sinh)</span></label>
+          <label><input id="score-media-detail" type="checkbox" onchange="scoreMediaToggleDetail_()"><span><b>Kèm bảng điểm từng học sinh trong ẢNH PNG</b> (tên, điểm, nhận xét – chỉ chọn khi có quyền chia sẻ)</span></label>
           <label><input id="score-media-xlsx" type="checkbox" onchange="scoreMediaOptionsChanged()"><span>Gửi kèm file Excel có họ tên và điểm chi tiết (không mặc định)</span></label>
         </div>
         <label for="score-media-message" style="font-size:13px;font-weight:700;display:block;margin-bottom:7px">Nội dung giáo viên duyệt</label>
@@ -1809,11 +1832,12 @@
         </div>
       </section>
       <section class="score-media-section">
-        <h4><i class="bi bi-image"></i> Ảnh PNG sẽ gửi vào nhóm</h4>
+        <h4><i class="bi bi-image"></i> Ảnh PNG sẽ gửi vào nhóm: biểu đồ tròn + phổ điểm</h4>
         <div class="score-media-image-area"><div class="score-media-report" id="score-media-report"></div></div>
         <p class="mini-note" style="margin-top:10px">Ảnh xuất ở hệ số scale 2. Excel chỉ được đính kèm khi giáo viên chủ động chọn.</p>
         <div id="score-media-status" class="score-media-status" role="status" aria-live="polite">Kiểm tra dữ liệu đã lưu và nhóm Zalo...</div>
         <div class="score-media-actions">
+          <button class="btn" type="button" onclick="scoreMediaDownloadPreview_()"><i class="bi bi-download"></i> Tải ảnh kiểm tra</button>
           <button class="btn" type="button" onclick="scoreMediaRefreshStatus()" id="score-media-refresh" disabled><i class="bi bi-arrow-clockwise"></i> Trạng thái gửi</button>
           <button id="score-media-submit" class="btn btn-primary" type="button" onclick="approveAndSendScoreMedia()" disabled><i class="bi bi-shield-check"></i> Xác nhận gửi đến nhóm</button>
         </div>
@@ -1872,7 +1896,7 @@
   // ============================================
   // CẤU HÌNH API - LIÊN KẾT VỚI GOOGLE SHEET
   // ============================================
-  const API_URL = "https://script.google.com/macros/s/AKfycbxZEii0s_3rqxUMEBOfs0YKz7--5DqgJqyiNOKC54BrO0alwa9ss9Wq44_piE69CTQC/exec";
+  const API_URL = "https://script.google.com/macros/s/AKfycbyowvXKHzguu53eI9ucGoJMeZtZALwxKDCw23IkV0q8dkG1Y_saRet9uG4Kz0ET71CD7A/exec";
   const FRONTEND_VERSION = 'V4.27';
   const CENTER_INFO = {
     address: '30/11D Phước Tường, Phước Long, Nam Nha Trang',
@@ -3625,21 +3649,75 @@ function scoreMediaStatus_(text,kind=''){
   const el=document.getElementById('score-media-status');if(!el)return;
   el.className='score-media-status'+(kind?' '+kind:'');el.textContent=String(text||'');
 }
+function scoreMediaPieDataUri_(stat){
+  // Use a real PNG image derived from canvas so html2canvas clone preserves the chart.
+  const values=[...(stat.bands||[0,0,0,0,0]),stat.absent+stat.ungraded];
+  const colors=['#ef4444','#f59e0b','#38bdf8','#2563eb','#16a34a','#94a3b8'];
+  const total=values.reduce((a,b)=>a+b,0);
+  const canvas=document.createElement('canvas');canvas.width=460;canvas.height=460;
+  const ctx=canvas.getContext('2d');if(!ctx)return '';
+  const cx=230,cy=230,r=204;let angle=-Math.PI/2;
+  if(!total){ctx.fillStyle='#e2e8f0';ctx.beginPath();ctx.arc(cx,cy,r,0,2*Math.PI);ctx.fill();}
+  for(let i=0;i<values.length&&total;i++){
+    if(!values[i])continue;
+    const end=angle+values[i]/total*2*Math.PI;
+    ctx.beginPath();ctx.moveTo(cx,cy);ctx.arc(cx,cy,r,angle,end);ctx.closePath();
+    ctx.fillStyle=colors[i];ctx.fill();ctx.lineWidth=3;ctx.strokeStyle='#fff';ctx.stroke();
+    angle=end;
+  }
+  ctx.fillStyle='#fff';ctx.beginPath();ctx.arc(cx,cy,104,0,Math.PI*2);ctx.fill();
+  ctx.textAlign='center';ctx.fillStyle='#17365f';ctx.font='bold 54px Arial';ctx.fillText(String(stat.graded),cx,cy+4);
+  ctx.font='24px Arial';ctx.fillStyle='#64748b';ctx.fillText('có điểm',cx,cy+38);
+  return canvas.toDataURL('image/png');
+}
 function scoreMediaReportHtml_(rows,stat){
   const c=scoreContext(),date=c.date?c.date.split('-').reverse().join('/'):'';
   const bands=['Dưới 5','5 – dưới 6,5','6,5 – dưới 8','8 – dưới 9','9 – 10'];
   const vals=stat.bands||[0,0,0,0,0],max=Math.max(1,...vals);
+  const pieValues=[...vals,stat.absent+stat.ungraded];
+  const pieColors=['#ef4444','#f59e0b','#38bdf8','#2563eb','#16a34a','#94a3b8'];
+  const pieLabels=[...bands,'Vắng / Chưa có điểm'];
+  const total=Math.max(1,stat.total);
+  const detailed=!!document.getElementById('score-media-detail')?.checked;
+  const detailTable=detailed?`<div class="score-media-detail-block"><h4>BẢNG ĐIỂM TỪ THẤP ĐẾN CAO · ${rows.length} HỌC SINH</h4>
+  <table class="score-media-detail-table"><thead><tr><th>STT</th><th>Họ và tên</th><th>Điểm</th><th>Nhận xét / Phân loại</th></tr></thead><tbody>${rows.map((x,i)=>{
+    const band=x.score===null?'':x.score>=9?'score-media-point-high':x.score<=5?'score-media-point-low':'';
+    return `<tr><td>${i+1}</td><td>${escapeHtml(x.s.name||'')}</td><td class="${band}">${escapeHtml(scoreFormat(x.score))}</td><td>${escapeHtml(x.comment||scoreStatusText(x))}</td></tr>`;
+  }).join('')}</tbody></table></div>`:'';
   return `<div class="score-media-report-head"><img src="logo.jpg" alt="Logo Trung tâm"><div><b>TRUNG TÂM TOÁN AN PHÚC</b><h3>KẾT QUẢ KIỂM TRA LỚP</h3><p>Vững kiến thức – Chắc tương lai</p></div></div>
   <div class="score-media-report-meta"><b>${escapeHtml(c.title)}</b><br>Khối ${escapeHtml(c.grade)} – Lớp ${escapeHtml(c.className)} · ${escapeHtml(date)}</div>
   <div class="score-media-report-stats">
   <div class="score-media-report-stat"><span>Tổng học sinh</span><strong>${stat.total}</strong></div>
   <div class="score-media-report-stat"><span>Đã có điểm</span><strong>${stat.graded}</strong></div>
-  <div class="score-media-report-stat"><span>Điểm trung bình</span><strong>${stat.avg===null?'—':escapeHtml(scoreFormat(stat.avg))}</strong></div>
+  <div class="score-media-report-stat"><span>Điểm trung bình</span><strong>${stat.avg===null?'—':escapeHtml(scoreFormat(Math.round(stat.avg*100)/100))}</strong></div>
   <div class="score-media-report-stat"><span>Từ 9 điểm</span><strong>${stat.high}</strong></div>
   <div class="score-media-report-stat"><span>Từ 5 điểm trở xuống</span><strong>${stat.low}</strong></div>
   <div class="score-media-report-stat"><span>Vắng / Chưa có điểm</span><strong>${stat.absent+stat.ungraded}</strong></div></div>
+  <div class="score-media-chart-wrap"><h4>BIỂU ĐỒ TRÒN PHÂN BỐ KẾT QUẢ</h4><div class="score-media-chart-layout">
+  <img class="score-media-chart-img" src="${scoreMediaPieDataUri_(stat)}" alt="Biểu đồ tròn phổ điểm" width="200" height="200">
+  <div class="score-media-chart-legend">${pieLabels.map((label,i)=>`<div><i style="background:${pieColors[i]}"></i><span>${escapeHtml(label)}</span><b>${pieValues[i]} · ${Math.round(pieValues[i]/total*100)}%</b></div>`).join('')}</div></div></div>
   <div class="score-media-report-bars"><h4>Phổ điểm của lớp</h4>${bands.map((b,i)=>`<div class="score-media-bar-row"><span>${escapeHtml(b)}</span><div class="score-media-bar"><i style="width:${Math.round(vals[i]/max*100)}%;${i===0?'background:#f97316':i===4?'background:#16a34a':''}"></i></div><b>${vals[i]}</b></div>`).join('')}</div>
-  <div class="score-media-report-note">Báo cáo tổng quan, không công khai kết quả cá nhân. Phụ huynh có thể trao đổi riêng với Trung tâm để được hỗ trợ chi tiết.<br>Trung tâm Toán An Phúc · ${escapeHtml(date)}</div>`;
+  ${detailTable}
+  <div class="score-media-report-note">${detailed?'Báo cáo có thông tin cá nhân, chỉ gửi cho nhóm được phép tiếp nhận.':'Báo cáo tổng quan, không công khai kết quả cá nhân. Phụ huynh có thể trao đổi riêng với Trung tâm để được hỗ trợ chi tiết.'}<br>Trung tâm Toán An Phúc · ${escapeHtml(date)}</div>`;
+}
+function scoreMediaToggleDetail_(){
+  try{
+    if(document.getElementById('score-media-detail').checked && !document.getElementById('score-media-png').checked)
+      document.getElementById('score-media-png').checked=true;
+    const rows=sortedScoreRows();document.getElementById('score-media-report').innerHTML=scoreMediaReportHtml_(rows,scoreGroupStatistics(rows));
+    document.getElementById('score-media-privacy-confirm').checked=false;
+    scoreMediaStatus_(document.getElementById('score-media-detail').checked?
+      'Ảnh đang hiển thị ĐIỂM CÁ NHÂN. Hãy kiểm tra quyền chia sẻ và xác nhận lại trước khi gửi.':'Đã chuyển về ảnh THỐNG KÊ KHÔNG CÓ TÊN học sinh.','warn');
+    scoreMediaOptionsChanged();
+  }catch(e){showError(e);}
+}
+async function scoreMediaDownloadPreview_(){
+  try{
+    const blob=await scoreMediaGroupPngBlob_();
+    if(blob.size<=8||blob.type!=='image/png')throw new Error('Dữ liệu PNG không hợp lệ.');
+    scoreDownloadBlob(blob,scoreFilename('png').replace(/\.png$/,'_XemTruoc.png'));
+    showToast('Đã tải đúng ảnh hiện tại trong khung duyệt để kiểm tra.');
+  }catch(e){showError(e);}
 }
 function scoreMediaViewReady_(){
   const t=document.getElementById('score-media-text').checked,
@@ -3675,6 +3753,7 @@ async function openScoreMediaPreview(){
     document.getElementById('score-media-text').checked=true;
     document.getElementById('score-media-png').checked=true;
     document.getElementById('score-media-xlsx').checked=false;
+    document.getElementById('score-media-detail').checked=false;
     document.getElementById('score-media-privacy-confirm').checked=false;
     document.getElementById('score-media-report').innerHTML=scoreMediaReportHtml_(rows,scoreGroupStatistics(rows));
     document.getElementById('score-media-refresh').disabled=true;
@@ -3691,9 +3770,9 @@ async function openScoreMediaPreview(){
 async function scoreMediaGroupPngBlob_(){
   const capture=await ensureHtml2CanvasLib(),source=document.getElementById('score-media-report');
   const holder=document.createElement('div');holder.style.cssText='position:fixed;left:0;top:0;width:680px;z-index:-1;pointer-events:none;background:#fff;';
-  const clone=source.cloneNode(true);clone.style.zoom='1';holder.appendChild(clone);document.getElementById('score-media-modal').appendChild(holder);
+  const clone=source.cloneNode(true);clone.style.zoom='1';holder.appendChild(clone);document.body.appendChild(holder);
   try{
-    const logo=clone.querySelector('img');if(logo&&!logo.complete)await Promise.race([new Promise(resolve=>{logo.addEventListener('load',resolve,{once:true});logo.addEventListener('error',resolve,{once:true});}),new Promise(resolve=>setTimeout(resolve,2000))]);
+    const images=[...clone.querySelectorAll('img')];await Promise.all(images.map(img=>img.complete?Promise.resolve():Promise.race([new Promise(resolve=>{img.addEventListener('load',resolve,{once:true});img.addEventListener('error',resolve,{once:true});}),new Promise(resolve=>setTimeout(resolve,2500))])));
     if(document.fonts?.ready)await document.fonts.ready;
     const canvas=await capture(clone,{scale:2,backgroundColor:'#fff',useCORS:true,logging:false,windowWidth:850,scrollX:0,scrollY:0});
     return await new Promise((resolve,reject)=>canvas.toBlob(b=>b?resolve(b):reject(new Error('Không tạo được ảnh PNG')),'image/png'));
@@ -3712,8 +3791,8 @@ async function approveAndSendScoreMedia(){
   if(SCORE_MEDIA_BUSY||!scoreMediaViewReady_())return;
   const dest=SCORE_MEDIA_DESTINATION,c=scoreContext(),txt=document.getElementById('score-media-text').checked,
     png=document.getElementById('score-media-png').checked,xlsx=document.getElementById('score-media-xlsx').checked,
-    message=document.getElementById('score-media-message').value.trim();
-  if(!confirm(`XÁC NHẬN GỬI ZALO\n\nNhóm: ${dest.group_name||dest.group_id}\nLớp: ${c.grade}${c.className}\nNội dung: ${[txt?'Tin nhắn':'',png?'Ảnh PNG thống kê':'',xlsx?'Excel chi tiết':''].filter(Boolean).join(' + ')}\n\nBạn đã kiểm tra nội dung và quyền chia sẻ?`))return;
+    message=document.getElementById('score-media-message').value.trim(),detail=document.getElementById('score-media-detail').checked;
+  if(!confirm(`XÁC NHẬN GỬI ZALO\n\nNhóm: ${dest.group_name||dest.group_id}\nLớp: ${c.grade}${c.className}\nNội dung: ${[txt?'Tin nhắn':'',png?(detail?'Ảnh PNG có bảng điểm cá nhân':'Ảnh PNG thống kê'):'',xlsx?'Excel chi tiết':''].filter(Boolean).join(' + ')}\n\nBạn đã kiểm tra nội dung và quyền chia sẻ?`))return;
   SCORE_MEDIA_BUSY=true;scoreMediaOptionsChanged();
   try{
     if(scoreMediaSignature_()!==SCORE_MEDIA_SAVED_SIGNATURE)throw new Error('Bảng điểm thay đổi trong lúc xem trước. Hãy lưu lại trước khi gửi.');
@@ -3723,12 +3802,13 @@ async function approveAndSendScoreMedia(){
     const pngBlob=png?await scoreMediaGroupPngBlob_():null;
     if(pngBlob&&pngBlob.size>4*1024*1024)throw new Error('Ảnh PNG quá 4 MB. Hãy giảm kích thước trước khi gửi.');
     const pngBase64=pngBlob?await scoreMediaBlobBase64_(pngBlob):'';
+    if(png&&(!pngBase64.startsWith('iVBORw0KGgo')||pngBlob.type!=='image/png'))throw new Error('Ảnh PNG không hợp lệ ngay tại trình duyệt. Hãy thử Tải ảnh kiểm tra.');
     const excelBase64=xlsx?scoreMediaExcelBytes_(await ensureXlsxLib(),rows):'';
     if(excelBase64.length>6*1024*1024)throw new Error('Excel quá lớn để gửi qua Gateway.');
     const records=rows.map(x=>({student_id:x.studentId,score:x.score===null?'':x.score,comment:x.comment}));
     const req={request_id:SCORE_MEDIA_REQUEST_ID,grade:c.grade,className:c.className,test_date:c.date,test_type:document.getElementById('ds-type').value,test_title:c.title,group_id:dest.group_id,
       send_text:txt,send_png:png,send_excel:xlsx,message:txt?message:'',records,
-      png_base64:pngBase64,png_filename:scoreFilename('png').replace(/\.png$/,'_TongHop.png'),excel_base64:excelBase64,excel_filename:scoreFilename('xlsx')};
+      png_base64:pngBase64,png_filename:scoreFilename('png').replace(/\.png$/,detail?'_ChiTiet.png':'_TongHop.png'),excel_base64:excelBase64,excel_filename:scoreFilename('xlsx')};
     const prep=await callAPI('prepareScoreGroupReport',req,'POST');
     const draft=prep.data||{};if(!draft.draft_id)throw new Error('Máy chủ chưa tạo bản chờ duyệt hợp lệ.');SCORE_MEDIA_DRAFT=draft;
     if(String(draft.group_id||dest.group_id)!==String(dest.group_id))throw new Error('Nhóm nhận thay đổi. Đã dừng gửi để bảo đảm an toàn.');
@@ -3737,7 +3817,8 @@ async function approveAndSendScoreMedia(){
     if(!approve.data?.job_id)throw new Error('Chưa nhận được mã lệnh gửi. Hãy kiểm tra hàng đợi trước khi thử lại.');
     SCORE_MEDIA_JOB_ID=approve.data.job_id;
     document.getElementById('score-media-refresh').disabled=false;
-    scoreMediaStatus_(`Lệnh ${SCORE_MEDIA_JOB_ID} đã được ghi nhận. Trạng thái: ${approve.data.status||'QUEUED'} (CHƯA khẳng định đã gửi). Bấm “Trạng thái gửi” để kiểm tra kết quả.`, 'ok');
+    scoreMediaStatus_(`Lệnh ${SCORE_MEDIA_JOB_ID} đã được ghi nhận. Trạng thái: ${approve.data.status||'QUEUED'}. Hệ thống tự kiểm tra tiến trình; chỉ báo ĐÃ GỬI khi Zalo xác nhận.`, 'warn');
+    scoreMediaScheduleStatusPoll_(0);
     showToast('Đã duyệt và xếp lệnh Zalo. Hãy xem trạng thái gửi.');
     scoreMediaOptionsChanged();
   }catch(e){
@@ -3746,12 +3827,22 @@ async function approveAndSendScoreMedia(){
     // Keep same request_id when retrying a failed prepare to avoid duplicate drafts.
   }finally{SCORE_MEDIA_BUSY=false;loading(false);scoreMediaOptionsChanged();}
 }
+let SCORE_MEDIA_POLL_TIMER=null;
+function scoreMediaScheduleStatusPoll_(count){
+  clearTimeout(SCORE_MEDIA_POLL_TIMER);
+  if(!SCORE_MEDIA_JOB_ID||count>=18)return;
+  SCORE_MEDIA_POLL_TIMER=setTimeout(async()=>{
+    const status=await scoreMediaRefreshStatus();
+    if(status==='QUEUED'||status==='SENDING'||status==='PREPARED')scoreMediaScheduleStatusPoll_(count+1);
+  },count===0?1500:6000);
+}
 async function scoreMediaRefreshStatus(){
   if(!SCORE_MEDIA_JOB_ID)return;
   try{const r=await callAPI('getScoreGroupSendStatus',{job_id:SCORE_MEDIA_JOB_ID});const x=r.data||{};
     const parts=[['Văn bản',x.text_status],['Ảnh PNG',x.png_status],['Excel',x.excel_status]].filter(([,v])=>v&&v!=='SKIPPED').map(([k,v])=>`${k}: ${v}`).join(' · ');
     scoreMediaStatus_(`Lệnh: ${SCORE_MEDIA_JOB_ID}\nTổng trạng thái: ${x.status||'UNKNOWN'}\n${parts}${x.last_error?'\nChi tiết: '+x.last_error:''}`,x.status==='SENT'?'ok':x.status==='FAILED'||x.status==='UNKNOWN'?'error':'warn');
-  }catch(e){scoreMediaStatus_('Không lấy được trạng thái: '+(e.message||String(e))+'. Không tự gửi lại để tránh trùng.','error');}
+    return x.status||'UNKNOWN';
+  }catch(e){scoreMediaStatus_('Không lấy được trạng thái: '+(e.message||String(e))+'. Không tự gửi lại để tránh trùng.','error');return 'ERROR';}
 }
 
 </script>
