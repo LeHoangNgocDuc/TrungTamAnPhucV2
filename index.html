@@ -981,7 +981,7 @@
 
       <div style="display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap; margin-bottom:16px;">
         <h3 class="section-title" style="margin:0"><i class="bi bi-calendar2-week"></i> 1. Báo cáo Số buổi dạy (Tháng đang chọn)</h3>
-        <button class="btn btn-primary" onclick="sendAllLessonReports()"><i class="bi bi-send-fill"></i> Nhắn số buổi cho các lớp</button>
+        <button class="btn btn-primary" onclick="sendAllLessonReports()"><i class="bi bi-send-fill"></i> Nhắn số buổi cho TẤT CẢ khối</button>
       </div>
       <div class="table-responsive" style="margin-bottom:32px">
         <table>
@@ -1240,10 +1240,10 @@
   // ============================================
   // CẤU HÌNH API - LIÊN KẾT VỚI GOOGLE SHEET
   // ============================================
-  const API_URL = "https://script.google.com/macros/s/AKfycbx-WNKdGNfRUDUB-fniEdtcIiakfXdBNynHc7_oAKEcBh_7PqGU9Sw84w2TFsR279UH/exec";
+  const API_URL = "https://script.google.com/macros/s/AKfycbxu-wkYueTfVRDu_RnlL9fndcLSKtR2LH8yK4al4xxKHNZnwsrB9wjQET02X4MzZQ8c/exec";
   const FRONTEND_VERSION = 'V4.27';
   const CENTER_INFO = {
-    address: '30/11A Phước Tường, Phước Long, Nam Nha Trang',
+    address: '30/11D Phước Tường, Phước Long, Nam Nha Trang',
     phone: '0972466347',
     zalo: '0972466347',
     maps_url: 'https://www.google.com/maps/search/?api=1&query=30%2F11D%20Ph%C6%B0%E1%BB%9Bc%20T%C6%B0%E1%BB%9Dng%2C%20Ph%C6%B0%E1%BB%9Bc%20Long%2C%20Nam%20Nha%20Trang'
@@ -2474,12 +2474,11 @@
   async function sendAllLessonReports() {
     const month = Number(document.getElementById('tk-thang').value);
     const year = Number(document.getElementById('tk-nam').value);
-    const grade = document.getElementById('tk-khoi').value;
-    const className = document.getElementById('tk-lop').value;
-    if (!confirm(`Nhắn số buổi học tháng ${month}/${year} cho tất cả nhóm Zalo đang hiển thị trong báo cáo?`)) return;
+    // Send all grades regardless of the report filters currently selected.
+    if (!confirm(`Nhắn số buổi học tháng ${month}/${year} cho TẤT CẢ nhóm lớp của trung tâm (khối 6, 7, 8, 9...)?`)) return;
     try {
       loading(true);
-      const response = await callAPI('sendBulkClassLessonReports', { month, year, grade, className }, 'POST');
+      const response = await callAPI('sendBulkClassLessonReports', { month, year, all_grades: true }, 'POST');
       const result = response.data || {};
       showToast(`Đã xếp hàng ${result.queued || 0}/${result.total || 0} lớp${result.duplicate ? `; ${result.duplicate} lớp đã có tin chờ` : ''}${result.skipped_no_zalo ? `; ${result.skipped_no_zalo} lớp chưa có nhóm Zalo (hãy bấm Thêm nhóm Zalo)` : ''}.`);
     } catch (e) { showError(e); } finally { loading(false); }
