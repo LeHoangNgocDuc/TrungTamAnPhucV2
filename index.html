@@ -1354,7 +1354,7 @@
             <div class="score-parent-group"><h4 style="color:#047857"><i class="bi bi-award"></i> Tuyên dương (≥ 9) <span id="score-parent-high-count">0</span></h4><p class="score-parent-help">Gửi lời chúc mừng và khích lệ tiếp tục phát huy.</p><div id="score-parent-high"></div><button class="btn btn-success score-batch-btn" type="button" onclick="sendScoreParentBatch('high')"><i class="bi bi-send-check"></i> Gửi tất cả nhóm ≥ 9</button></div>
             <div class="score-parent-group"><h4 style="color:#b45309"><i class="bi bi-heart-pulse"></i> Cần lưu ý / Kèm cặp thêm (≤ 5) <span id="score-parent-low-count">0</span></h4><p class="score-parent-help">Thông báo tế nhị, hướng dẫn phối hợp ôn tập.</p><div id="score-parent-low"></div><button class="btn btn-warning score-batch-btn" type="button" onclick="sendScoreParentBatch('low')"><i class="bi bi-send-check"></i> Gửi tất cả nhóm ≤ 5</button></div>
           </div>
-          <div class="score-parent-batch-bar"><button class="btn btn-primary score-batch-btn" type="button" onclick="sendScoreParentBatch('both')"><i class="bi bi-people-fill"></i> Gửi tất cả hai nhóm (≥ 9 và ≤ 5)</button><p id="score-parent-batch-status" role="status" aria-live="polite">Chỉ gửi tin riêng tới những học sinh có điểm thuộc hai ngưỡng; giáo viên phải lưu điểm và xác nhận trước khi xếp hàng đợi.</p></div>
+          <div class="score-parent-batch-bar"><button class="btn btn-primary score-batch-btn" type="button" onclick="sendScoreParentBatch('both')"><i class="bi bi-people-fill"></i> Gửi tất cả hai nhóm (≥ 9 và ≤ 5)</button><button class="btn score-batch-btn" type="button" onclick="scoreZaloCheckAutomation()"><i class="bi bi-activity"></i> Kiểm tra Zalo tự động</button><p id="score-parent-batch-status" role="status" aria-live="polite">Chỉ gửi tin riêng tới những học sinh có điểm thuộc hai ngưỡng; giáo viên phải lưu điểm và xác nhận trước khi xếp hàng đợi.</p></div>
         </section>
       </section>
       <div id="ds-save-wrap" style="display:none;justify-content:flex-end;gap:10px;flex-wrap:wrap;margin-top:18px;">
@@ -1896,7 +1896,7 @@
   // ============================================
   // CẤU HÌNH API - LIÊN KẾT VỚI GOOGLE SHEET
   // ============================================
-  const API_URL = "https://script.google.com/macros/s/AKfycbzQeeSQ7WTWLBPdHAUZy_-qyVBJcA4f_VBj9fasF-80TWLFa5AtgBa5UZqVlIdePZjL/exec";
+  const API_URL = "https://script.google.com/macros/s/AKfycbyowvXKHzguu53eI9ucGoJMeZtZALwxKDCw23IkV0q8dkG1Y_saRet9uG4Kz0ET71CD7A/exec";
   const FRONTEND_VERSION = 'V4.27';
   const CENTER_INFO = {
     address: '30/11D Phước Tường, Phước Long, Nam Nha Trang',
@@ -2501,6 +2501,23 @@
       return a.index-b.index;
     });
   }
+  // V4.28.6: only PHOTO reports sort from highest to lowest; absence and no mark stay last.
+  function scoreImageRowsDescending_(rows){
+    return [...rows].sort((a,b)=>{
+      const aMissing=a.score===null||!Number.isFinite(a.score),bMissing=b.score===null||!Number.isFinite(b.score);
+      if(aMissing!==bMissing)return aMissing?1:-1;
+      if(!aMissing&&a.score!==b.score)return b.score-a.score;
+      return a.index-b.index;
+    });
+  }
+  function scoreImagePraise_(entry){
+    const note=String(entry.comment||'').trim();
+    if(entry.score===null||!Number.isFinite(entry.score))return note||scoreStatusText(entry);
+    if(entry.score>=9.5)return note?'Xuất sắc! '+note:'Xuất sắc! Bài làm nổi bật, nắm vững kiến thức và trình bày rất tốt. Tiếp tục phát huy!';
+    if(entry.score>=9)return note?'Tuyên dương! '+note:'Tuyên dương! Hoàn thành bài tốt, nắm chắc kiến thức và có nhiều cố gắng.';
+    if(entry.score>=8)return note||'Làm bài tốt, hiểu kiến thức và có tinh thần học tập tích cực. Tiếp tục phát huy!';
+    return note||scoreStatusText(entry);
+  }
   function validateScoreRows(rows){
     const bad=rows.find(x=>Number.isNaN(x.score));
     if(bad){document.querySelector(`.score-input[data-index="${bad.index}"]`)?.focus();throw new Error(`Điểm của ${bad.s.name} không hợp lệ. Chỉ nhập từ 0 đến 10; dùng dấu phẩy hoặc dấu chấm, hoặc ghi “Vắng”.`);}
@@ -2651,6 +2668,23 @@
       SCORE_PARENT_BATCH_BUSY=false;document.querySelectorAll('.score-batch-btn').forEach(b=>b.disabled=false);loading(false);
     }
   }
+  async function scoreZaloCheckAutomation(){
+    const output=document.getElementById('score-parent-batch-status');
+    if(output)output.textContent='Đang kiểm tra trạng thái Gateway và hai hàng đợi...';
+    try{
+      const [d,q]=await Promise.all([callAPI('getZaloDiagnostics',{},'GET'),callAPI('getZaloQueueStatus',{},'GET')]);
+      const x=d.data||{},v=q.data||{},parts=[];
+      parts.push('Gateway: '+(x.gateway_reachable?'Có kết nối':'Không kết nối'));
+      parts.push('Chrome/Zalo: '+(x.zalo_authenticated?'Đã mở và có giao diện trò chuyện':x.browser_alive?'Chrome mở nhưng chưa xác nhận đăng nhập Zalo':'Chưa sẵn sàng'));
+      parts.push('Gửi tin PH: '+(x.parent_queue_trigger?'Lịch chạy mỗi phút đã bật':'CHƯA CÓ lịch tự gửi'));
+      parts.push('Báo cáo ảnh: '+(x.media_queue_trigger?'Lịch chạy mỗi phút đã bật':'CHƯA CÓ lịch gửi ảnh'));
+      parts.push('Tin PH đang chờ: '+(v.waiting||0)+'; cần kiểm tra: '+(v.review_required||0)+'; lỗi: '+(v.failed||0));
+      if(x.media_queue_status)parts.push('Ảnh nhóm đang chờ: '+(x.media_queue_status.queued||0)+'; chưa rõ: '+(x.media_queue_status.unknown||0)+'; đã gửi: '+(x.media_queue_status.sent||0));
+      if(x.message)parts.push('Chi tiết: '+x.message);
+      if(output)output.textContent=parts.join(' | ');
+      if(!x.zalo_authenticated||!x.parent_queue_trigger)showToast('Zalo chưa sẵn sàng tự gửi: xem kết quả kiểm tra bên dưới.','error');
+    }catch(e){if(output)output.textContent='Không kiểm tra được Zalo: '+String(e.message||e);showError(e);}
+  }
   async function scoreCopyText(value){
     if(!value)throw new Error('Chưa có nội dung để sao chép.');
     if(navigator.clipboard?.writeText&&window.isSecureContext){await navigator.clipboard.writeText(value);return;}
@@ -2661,8 +2695,9 @@
   function prepareScoreSms(event,index,el){const msg=scoreParentMessage(index);if(!msg){event.preventDefault();return;}const number=String(SCORE_ROWS[index]?.parent_phone||SCORE_ROWS[index]?.phone||'').replace(/\D/g,'');if(!number){event.preventDefault();return;}el.href=`sms:${encodeURIComponent(number)}?body=${encodeURIComponent(msg)}`;}
   function buildScorePreview(rows,stat){
     const ctx=scoreContext(),stamp=ctx.date?ctx.date.split('-').reverse().join('/'):'—';
-    const tableRows=rows.map((x,i)=>`<tr><td>${i+1}</td><td><b>${escapeHtml(x.s.name||'')}</b></td><td>${escapeHtml(scoreClassText(x.s))}</td><td style="text-align:center"><span class="score-chip-value ${scoreBand(x.score)}">${escapeHtml(scoreFormat(x.score))}</span></td><td>${escapeHtml(x.comment||scoreStatusText(x))}</td></tr>`).join('');
-    document.getElementById('score-report-card').innerHTML=`<header class="score-report-head"><img class="score-report-logo" src="logo.jpg" alt="Logo Trung tâm Toán An Phúc"><div><div class="score-report-brand">TRUNG TÂM TOÁN AN PHÚC</div><h3>BẢNG KẾT QUẢ HỌC TẬP</h3><p>Vững kiến thức – Chắc tương lai</p></div></header><div class="score-report-meta"><div><strong>${escapeHtml(ctx.title)}</strong><br>Khối ${escapeHtml(ctx.grade)} · Lớp ${escapeHtml(ctx.className)}</div><div style="text-align:right">Ngày kiểm tra: <b>${escapeHtml(stamp)}</b><br>Đã có điểm: <b>${stat.graded}/${stat.total}</b></div></div><table class="score-report-table"><colgroup><col style="width:45px"><col style="width:207px"><col style="width:90px"><col style="width:85px"><col></colgroup><thead><tr><th>STT</th><th>Họ và tên</th><th>Lớp/Nhóm</th><th>Điểm</th><th>Nhận xét / Phân loại</th></tr></thead><tbody>${tableRows}</tbody></table><footer class="score-report-footer">Phổ điểm: &lt;5 (${stat.bands[0]}) · 5–&lt;6,5 (${stat.bands[1]}) · 6,5–&lt;8 (${stat.bands[2]}) · 8–&lt;9 (${stat.bands[3]}) · 9–10 (${stat.bands[4]}) &nbsp; | &nbsp; TB: ${escapeHtml(stat.avg===null?'—':scoreFormat(Math.round(stat.avg*100)/100))}<div>Trung tâm Toán An Phúc · Bảng tổng hợp kết quả theo điểm tăng dần</div></footer>`;
+    const photoRows=scoreImageRowsDescending_(rows);
+    const tableRows=photoRows.map((x,i)=>`<tr><td>${i+1}</td><td><b>${escapeHtml(x.s.name||'')}</b></td><td>${escapeHtml(scoreClassText(x.s))}</td><td style="text-align:center"><span class="score-chip-value ${scoreBand(x.score)}">${escapeHtml(scoreFormat(x.score))}</span></td><td>${escapeHtml(scoreImagePraise_(x))}</td></tr>`).join('');
+    document.getElementById('score-report-card').innerHTML=`<header class="score-report-head"><img class="score-report-logo" src="logo.jpg" alt="Logo Trung tâm Toán An Phúc"><div><div class="score-report-brand">TRUNG TÂM TOÁN AN PHÚC</div><h3>BẢNG KẾT QUẢ HỌC TẬP</h3><p>Vững kiến thức – Chắc tương lai</p></div></header><div class="score-report-meta"><div><strong>${escapeHtml(ctx.title)}</strong><br>Khối ${escapeHtml(ctx.grade)} · Lớp ${escapeHtml(ctx.className)}</div><div style="text-align:right">Ngày kiểm tra: <b>${escapeHtml(stamp)}</b><br>Đã có điểm: <b>${stat.graded}/${stat.total}</b></div></div><table class="score-report-table"><colgroup><col style="width:45px"><col style="width:207px"><col style="width:90px"><col style="width:85px"><col></colgroup><thead><tr><th>STT</th><th>Họ và tên</th><th>Lớp/Nhóm</th><th>Điểm</th><th>Nhận xét / Phân loại</th></tr></thead><tbody>${tableRows}</tbody></table><footer class="score-report-footer">Phổ điểm: &lt;5 (${stat.bands[0]}) · 5–&lt;6,5 (${stat.bands[1]}) · 6,5–&lt;8 (${stat.bands[2]}) · 8–&lt;9 (${stat.bands[3]}) · 9–10 (${stat.bands[4]}) &nbsp; | &nbsp; TB: ${escapeHtml(stat.avg===null?'—':scoreFormat(Math.round(stat.avg*100)/100))}<div>Trung tâm Toán An Phúc · Ảnh bảng điểm xếp từ CAO xuống THẤP; học sinh vắng/chưa có điểm ở cuối</div></footer>`;
   }
   function processScoreReport(notify=true){
     if(!SCORE_ROWS.length){if(notify)showToast('Hãy tải danh sách học sinh trước.','error');return false;}
@@ -2685,7 +2720,7 @@
     SCORE_GROUP_LAST_GENERATED=generated;
     buildScorePreview(rows,stat);renderScoreParentGroup(rows,'high');renderScoreParentGroup(rows,'low');
     document.getElementById('score-analysis').style.display='block';SCORE_REPORT_ACTIVE=true;
-    if(notify)showToast('Đã sắp xếp điểm tăng dần và tổng hợp báo cáo.');return true;
+    if(notify)showToast('Bảng nhập điểm tăng dần; ảnh xuất riêng theo điểm cao xuống thấp.');return true;
   }
   let SCORE_UPDATE_TIMER=null;
   function refreshScoreReportIfActive(){
@@ -3714,10 +3749,11 @@ function scoreMediaReportHtml_(rows,stat){
   const pieLabels=[...bands,'Vắng / Chưa có điểm'];
   const total=Math.max(1,stat.total);
   const detailed=!!document.getElementById('score-media-detail')?.checked;
-  const detailTable=detailed?`<div class="score-media-detail-block"><h4>BẢNG ĐIỂM TỪ THẤP ĐẾN CAO · ${rows.length} HỌC SINH</h4>
-  <table class="score-media-detail-table"><thead><tr><th>STT</th><th>Họ và tên</th><th>Điểm</th><th>Nhận xét / Phân loại</th></tr></thead><tbody>${rows.map((x,i)=>{
+  const photoRows=scoreImageRowsDescending_(rows);
+  const detailTable=detailed?`<div class="score-media-detail-block"><h4>BẢNG ĐIỂM TỪ CAO XUỐNG THẤP · ${photoRows.length} HỌC SINH</h4>
+  <table class="score-media-detail-table"><thead><tr><th>STT</th><th>Họ và tên</th><th>Điểm</th><th>Nhận xét / Phân loại</th></tr></thead><tbody>${photoRows.map((x,i)=>{
     const band=x.score===null?'':x.score>=9?'score-media-point-high':x.score<=5?'score-media-point-low':'';
-    return `<tr><td>${i+1}</td><td>${escapeHtml(x.s.name||'')}</td><td class="${band}">${escapeHtml(scoreFormat(x.score))}</td><td>${escapeHtml(x.comment||scoreStatusText(x))}</td></tr>`;
+    return `<tr><td>${i+1}</td><td>${escapeHtml(x.s.name||'')}</td><td class="${band}">${escapeHtml(scoreFormat(x.score))}</td><td>${escapeHtml(scoreImagePraise_(x))}</td></tr>`;
   }).join('')}</tbody></table></div>`:'';
   return `<div class="score-media-report-head"><img src="logo.jpg" alt="Logo Trung tâm"><div><b>TRUNG TÂM TOÁN AN PHÚC</b><h3>KẾT QUẢ KIỂM TRA LỚP</h3><p>Vững kiến thức – Chắc tương lai</p></div></div>
   <div class="score-media-report-meta"><b>${escapeHtml(c.title)}</b><br>Khối ${escapeHtml(c.grade)} – Lớp ${escapeHtml(c.className)} · ${escapeHtml(date)}</div>
@@ -3732,6 +3768,7 @@ function scoreMediaReportHtml_(rows,stat){
   <img class="score-media-chart-img" src="${scoreMediaPieDataUri_(stat)}" alt="Biểu đồ tròn phổ điểm" width="200" height="200">
   <div class="score-media-chart-legend">${pieLabels.map((label,i)=>`<div><i style="background:${pieColors[i]}"></i><span>${escapeHtml(label)}</span><b>${pieValues[i]} · ${Math.round(pieValues[i]/total*100)}%</b></div>`).join('')}</div></div></div>
   <div class="score-media-report-bars"><h4>Phổ điểm của lớp</h4>${bands.map((b,i)=>`<div class="score-media-bar-row"><span>${escapeHtml(b)}</span><div class="score-media-bar"><i style="width:${Math.round(vals[i]/max*100)}%;${i===0?'background:#f97316':i===4?'background:#16a34a':''}"></i></div><b>${vals[i]}</b></div>`).join('')}</div>
+  <div class="score-media-report-note" style="background:#ecfdf5;border-left:4px solid #16a34a;padding:12px;margin:14px 0;font-weight:600;color:#166534">Tuyên dương ${stat.high} em đạt từ 9 điểm: kết quả học tập nổi bật, nắm vững kiến thức. Chúc mừng và mong các em tiếp tục phát huy!</div>
   ${detailTable}
   <div class="score-media-report-note">${detailed?'Báo cáo có thông tin cá nhân, chỉ gửi cho nhóm được phép tiếp nhận.':'Báo cáo tổng quan, không công khai kết quả cá nhân. Phụ huynh có thể trao đổi riêng với Trung tâm để được hỗ trợ chi tiết.'}<br>Trung tâm Toán An Phúc · ${escapeHtml(date)}</div>`;
 }
