@@ -1076,6 +1076,12 @@
 @media(max-width:850px){.score-media-image-area #score-media-report{zoom:.68}.score-media-layout{grid-template-columns:1fr}.score-media-top h3{font-size:18px}#score-media-modal .score-media-dialog{padding:14px;max-height:95dvh}.score-media-image-area{max-height:450px}.score-media-details{grid-template-columns:1fr 1fr}}
 @media(max-width:420px){.score-media-image-area #score-media-report{zoom:.42}.score-media-details{grid-template-columns:1fr}.score-media-actions .btn{width:100%;justify-content:center}.score-media-section{padding:11px}}
 
+
+/* V4.28.3: Gửi tin riêng theo ngưỡng điểm */
+.score-batch-btn{width:100%;min-height:44px;margin-top:12px;white-space:normal;line-height:1.4}
+.score-parent-batch-bar{border:1px solid #bfdbfe;border-radius:16px;background:#eff6ff;padding:14px;margin-top:16px}
+.score-parent-batch-bar p{font-size:13px;color:#475569;line-height:1.5;margin:8px 0 0}
+.score-batch-btn:disabled{opacity:.55;cursor:not-allowed}
 </style>
   <!-- Export bảng điểm: SheetJS & html2canvas, tự tải trước khi sử dụng -->
   <script defer src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
@@ -1323,17 +1329,18 @@
         <section class="score-parent-area" aria-label="Phụ huynh cần liên hệ">
           <div class="score-section-heading"><div><h3><i class="bi bi-envelope-heart"></i> Cần nhắn tin riêng cho Phụ huynh</h3><p>Điểm ≥ 9: tuyên dương • Điểm ≤ 5: quan tâm, kèm cặp thêm. Giáo viên có thể sửa nhận xét từng em.</p></div></div>
           <div class="score-parent-groups">
-            <div class="score-parent-group"><h4 style="color:#047857"><i class="bi bi-award"></i> Tuyên dương (≥ 9) <span id="score-parent-high-count">0</span></h4><p class="score-parent-help">Gửi lời chúc mừng và khích lệ tiếp tục phát huy.</p><div id="score-parent-high"></div></div>
-            <div class="score-parent-group"><h4 style="color:#b45309"><i class="bi bi-heart-pulse"></i> Cần lưu ý / Kèm cặp thêm (≤ 5) <span id="score-parent-low-count">0</span></h4><p class="score-parent-help">Thông báo tế nhị, hướng dẫn phối hợp ôn tập.</p><div id="score-parent-low"></div></div>
+            <div class="score-parent-group"><h4 style="color:#047857"><i class="bi bi-award"></i> Tuyên dương (≥ 9) <span id="score-parent-high-count">0</span></h4><p class="score-parent-help">Gửi lời chúc mừng và khích lệ tiếp tục phát huy.</p><div id="score-parent-high"></div><button class="btn btn-success score-batch-btn" type="button" onclick="sendScoreParentBatch('high')"><i class="bi bi-send-check"></i> Gửi tất cả nhóm ≥ 9</button></div>
+            <div class="score-parent-group"><h4 style="color:#b45309"><i class="bi bi-heart-pulse"></i> Cần lưu ý / Kèm cặp thêm (≤ 5) <span id="score-parent-low-count">0</span></h4><p class="score-parent-help">Thông báo tế nhị, hướng dẫn phối hợp ôn tập.</p><div id="score-parent-low"></div><button class="btn btn-warning score-batch-btn" type="button" onclick="sendScoreParentBatch('low')"><i class="bi bi-send-check"></i> Gửi tất cả nhóm ≤ 5</button></div>
           </div>
+          <div class="score-parent-batch-bar"><button class="btn btn-primary score-batch-btn" type="button" onclick="sendScoreParentBatch('both')"><i class="bi bi-people-fill"></i> Gửi tất cả hai nhóm (≥ 9 và ≤ 5)</button><p id="score-parent-batch-status" role="status" aria-live="polite">Chỉ gửi tin riêng tới những học sinh có điểm thuộc hai ngưỡng; giáo viên phải lưu điểm và xác nhận trước khi xếp hàng đợi.</p></div>
         </section>
       </section>
       <div id="ds-save-wrap" style="display:none;justify-content:flex-end;gap:10px;flex-wrap:wrap;margin-top:18px;">
         <button class="btn btn-primary" onclick="saveScoresV44('none')"><i class="bi bi-floppy-fill"></i> Lưu Bảng Điểm</button>
         <button class="btn btn-warning" type="button" onclick="openScoreMediaPreview()"><i class="bi bi-send-check"></i> Xem trước & Gửi Zalo nhóm</button>
-        <button class="btn btn-success" onclick="saveScoresV44('parents')"><i class="bi bi-send-check-fill"></i> Lưu & Gửi điểm riêng cho Phụ huynh</button>
+        <button class="btn btn-success" type="button" onclick="sendScoreParentBatch('both')"><i class="bi bi-send-check-fill"></i> Gửi riêng hai nhóm điểm ≥ 9 / ≤ 5</button>
       </div>
-      <div class="mini-note" style="margin-top:10px">Có thể nhập 4,5 hoặc 4.5, gõ “Vắng” hoặc để trống; dán trực tiếp nhiều điểm từ Excel vào một ô điểm. Điểm chưa lưu chỉ là bản xem trước. Nút gửi Zalo tự động hiện có vẫn áp dụng tùy chọn “Không gửi riêng PH khi điểm dưới ngưỡng” ở phía trên; nút Copy tin nhắn riêng không chịu bộ lọc này.</div>
+      <div class="mini-note" style="margin-top:10px">Có thể nhập 4,5 hoặc 4.5, gõ “Vắng” hoặc để trống; dán trực tiếp nhiều điểm từ Excel vào một ô điểm. Điểm chưa lưu chỉ là bản xem trước. Gửi phụ huynh theo hai nhóm điểm được thực hiện bằng nút riêng, sau khi đã lưu. Các tùy chọn bỏ qua điểm yếu của luồng gửi khác không áp dụng cho hai nhóm này.</div>
     </div>
 
 
@@ -1865,7 +1872,7 @@
   // ============================================
   // CẤU HÌNH API - LIÊN KẾT VỚI GOOGLE SHEET
   // ============================================
-  const API_URL = "https://script.google.com/macros/s/AKfycbxyd5qCGPXlU95YlUL_5DVf0Y8qQb5bg10S6E8Uj0c9_ZbYERX_9Qql_t6SfH7Pscfr/exec";
+  const API_URL = "https://script.google.com/macros/s/AKfycbyowvXKHzguu53eI9ucGoJMeZtZALwxKDCw23IkV0q8dkG1Y_saRet9uG4Kz0ET71CD7A/exec";
   const FRONTEND_VERSION = 'V4.27';
   const CENTER_INFO = {
     address: '30/11D Phước Tường, Phước Long, Nam Nha Trang',
@@ -2544,6 +2551,46 @@
     const note=edited===undefined?scoreParentDefaultNote(row,kind):edited;
     const ctx=scoreContext();
     return `Chào phụ huynh em ${row.s.name}! Trung tâm Toán An Phúc xin thông báo kết quả ${ctx.title} ngày ${ctx.date?ctx.date.split('-').reverse().join('/'):''}: em đạt ${scoreFormat(row.score)}/10 điểm. ${note.trim()} Trân trọng!`;
+  }
+  let SCORE_PARENT_BATCH_BUSY=false;
+  async function sendScoreParentBatch(kind){
+    if(SCORE_PARENT_BATCH_BUSY)return;
+    try{
+      if(!isAdminAuthenticated())throw new Error('Vui lòng đăng nhập Giáo viên.');
+      if(!['high','low','both'].includes(kind))throw new Error('Nhóm điểm không hợp lệ.');
+      if(!SCORE_MEDIA_SAVED_SIGNATURE||scoreMediaSignature_()!==SCORE_MEDIA_SAVED_SIGNATURE)
+        throw new Error('Cần lưu bảng điểm trước khi gửi; hãy bấm “Lưu Bảng Điểm”.');
+      const rows=sortedScoreRows();validateScoreRows(rows);
+      const selected=rows.filter(x=>x.score!==null&&Number.isFinite(x.score)&&
+        (kind==='both'?(x.score>=9||x.score<=5):kind==='high'?x.score>=9:x.score<=5));
+      if(!selected.length)throw new Error('Không có học sinh thuộc nhóm điểm đã chọn.');
+      const unknown=selected.filter(x=>!String(x.s.parent_phone||x.s.phone||x.s.zalo_name||'').trim());
+      const title=kind==='high'?'TUYÊN DƯƠNG ≥ 9':kind==='low'?'CẦN QUAN TÂM ≤ 5':'CẢ HAI NHÓM ≥ 9 VÀ ≤ 5';
+      if(!confirm(`XÁC NHẬN GỬI TIN RIÊNG ZALO\n\n${title}\nSố học sinh: ${selected.length}\nChưa có thông tin liên hệ trên web: ${unknown.length}\n\nSẽ xếp tin nhắn riêng tới phụ huynh, không gửi vào nhóm lớp.\nBạn đã rà soát nhận xét và đồng ý gửi?`))return;
+      SCORE_PARENT_BATCH_BUSY=true;
+      document.querySelectorAll('.score-batch-btn').forEach(b=>b.disabled=true);
+      const status=document.getElementById('score-parent-batch-status');if(status)status.textContent='Đang đối chiếu bảng điểm đã lưu và xếp tin nhắn...';
+      const ctx=scoreContext();const notes={};
+      selected.forEach(x=>{
+        const edited=SCORE_PARENT_EDITS.get(String(x.studentId));
+        if(edited!==undefined)notes[String(x.studentId)]=String(edited);
+      });
+      loading(true);
+      const r=await callAPI('queueScoreParentHighlights',{
+        grade:ctx.grade,className:ctx.className,test_date:ctx.date,
+        test_type:document.getElementById('ds-type').value,test_title:ctx.title,kind,
+        records:scoreRowsSnapshot().map(x=>({student_id:x.studentId,score:x.score===null?'':x.score,comment:x.comment})),notes
+      },'POST');
+      const a=r.data||{};
+      const detail=`Đã xếp ${a.queued||0} tin; trùng ${a.duplicate||0}; thiếu liên hệ ${a.missing_contact||0}; tổng đúng ngưỡng ${a.eligible||0}.`;
+      if(status)status.textContent=detail+' Tin nhắn nằm trong hàng đợi Zalo; chưa đồng nghĩa đã gửi thành công.';
+      showToast(detail,Number(a.queued||0)>0?'success':'error');
+    }catch(e){
+      const status=document.getElementById('score-parent-batch-status');if(status)status.textContent=e.message||String(e);
+      showError(e);
+    }finally{
+      SCORE_PARENT_BATCH_BUSY=false;document.querySelectorAll('.score-batch-btn').forEach(b=>b.disabled=false);loading(false);
+    }
   }
   async function scoreCopyText(value){
     if(!value)throw new Error('Chưa có nội dung để sao chép.');
@@ -3637,9 +3684,9 @@ async function openScoreMediaPreview(){
     if(!r?.data?.group_id||r?.data?.enabled===false)throw new Error('Chưa cấu hình mã nhóm Zalo hợp lệ cho lớp này.');
     SCORE_MEDIA_DESTINATION=r.data;
     document.getElementById('score-media-destination').textContent=r.data.group_name||r.data.group_id;
-    scoreMediaStatus_('Nhóm đã xác minh. Kiểm tra lại nội dung, đánh dấu quyền chia sẻ rồi xác nhận gửi. Chưa có tin nào được phát hành.', 'ok');
+    scoreMediaStatus_(r.data.mapping_verified?'Nhóm đã được xác minh trong Sheets. Kiểm tra lại trước khi gửi.':'Đã lấy nhóm từ CẤU HÌNH LỚP đang dùng cho báo cáo. Nhóm này chưa xác minh riêng trong ZaloGroupMappings: giáo viên phải kiểm tra tên và xác nhận ở bước duyệt.', r.data.mapping_verified?'ok':'warn');
     scoreMediaOptionsChanged();
-  }catch(e){SCORE_MEDIA_DESTINATION=null;scoreMediaOptionsChanged();const m=document.getElementById('score-media-modal');if(m.style.display==='flex')scoreMediaStatus_((e.message||String(e))+'\nNếu API chưa được cập nhật, hãy cài module ScoreMediaBackend.gs trong Apps Script V4.27.', 'error');else showError(e);}
+  }catch(e){SCORE_MEDIA_DESTINATION=null;scoreMediaOptionsChanged();const m=document.getElementById('score-media-modal');if(m.style.display==='flex')scoreMediaStatus_((e.message||String(e))+'\nHãy kiểm tra Code.gs đã Deploy bản mới và tên nhóm trong mục cấu hình lớp.', 'error');else showError(e);}
 }
 async function scoreMediaGroupPngBlob_(){
   const capture=await ensureHtml2CanvasLib(),source=document.getElementById('score-media-report');
