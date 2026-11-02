@@ -1354,7 +1354,7 @@
             <div class="score-parent-group"><h4 style="color:#047857"><i class="bi bi-award"></i> Tuyên dương (≥ 9) <span id="score-parent-high-count">0</span></h4><p class="score-parent-help">Gửi lời chúc mừng và khích lệ tiếp tục phát huy.</p><div id="score-parent-high"></div><button class="btn btn-success score-batch-btn" type="button" onclick="sendScoreParentBatch('high')"><i class="bi bi-send-check"></i> Gửi tất cả nhóm ≥ 9</button></div>
             <div class="score-parent-group"><h4 style="color:#b45309"><i class="bi bi-heart-pulse"></i> Cần lưu ý / Kèm cặp thêm (≤ 5) <span id="score-parent-low-count">0</span></h4><p class="score-parent-help">Thông báo tế nhị, hướng dẫn phối hợp ôn tập.</p><div id="score-parent-low"></div><button class="btn btn-warning score-batch-btn" type="button" onclick="sendScoreParentBatch('low')"><i class="bi bi-send-check"></i> Gửi tất cả nhóm ≤ 5</button></div>
           </div>
-          <div class="score-parent-batch-bar"><button class="btn btn-primary score-batch-btn" type="button" onclick="sendScoreParentBatch('both')"><i class="bi bi-people-fill"></i> Gửi tất cả hai nhóm (≥ 9 và ≤ 5)</button><button class="btn score-batch-btn" type="button" onclick="scoreZaloCheckAutomation()"><i class="bi bi-activity"></i> Kiểm tra Zalo tự động</button><p id="score-parent-batch-status" role="status" aria-live="polite">Chỉ gửi tin riêng tới những học sinh có điểm thuộc hai ngưỡng; giáo viên phải lưu điểm và xác nhận trước khi xếp hàng đợi.</p></div>
+          <div class="score-parent-batch-bar"><button class="btn btn-primary score-batch-btn" type="button" onclick="sendScoreParentBatch('both')"><i class="bi bi-people-fill"></i> Gửi tất cả hai nhóm (≥ 9 và ≤ 5)</button><button class="btn score-batch-btn" type="button" onclick="scoreZaloCheckAutomation()"><i class="bi bi-activity"></i> Kiểm tra Zalo tự động</button><button class="btn score-batch-btn" type="button" onclick="scoreZaloSendTest()"><i class="bi bi-send-check"></i> Gửi 1 tin thử (quản trị)</button><p id="score-parent-batch-status" role="status" aria-live="polite">Chỉ gửi tin riêng tới những học sinh có điểm thuộc hai ngưỡng; giáo viên phải lưu điểm và xác nhận trước khi xếp hàng đợi.</p></div>
         </section>
       </section>
       <div id="ds-save-wrap" style="display:none;justify-content:flex-end;gap:10px;flex-wrap:wrap;margin-top:18px;">
@@ -1896,7 +1896,7 @@
   // ============================================
   // CẤU HÌNH API - LIÊN KẾT VỚI GOOGLE SHEET
   // ============================================
-  const API_URL = "https://script.google.com/macros/s/AKfycbxKXnwmz0kmGCMH4XE6jf4QXGP-7dozaOOeZjwAEJHG6IiF9lUu2Id1_9bHvKcd4XCt/exec";
+  const API_URL = "https://script.google.com/macros/s/AKfycbyowvXKHzguu53eI9ucGoJMeZtZALwxKDCw23IkV0q8dkG1Y_saRet9uG4Kz0ET71CD7A/exec";
   const FRONTEND_VERSION = 'V4.27';
   const CENTER_INFO = {
     address: '30/11D Phước Tường, Phước Long, Nam Nha Trang',
@@ -2684,6 +2684,24 @@
       if(output)output.textContent=parts.join(' | ');
       if(!x.zalo_authenticated||!x.parent_queue_trigger)showToast('Zalo chưa sẵn sàng tự gửi: xem kết quả kiểm tra bên dưới.','error');
     }catch(e){if(output)output.textContent='Không kiểm tra được Zalo: '+String(e.message||e);showError(e);}
+  }
+  async function scoreZaloSendTest(){
+    const status=document.getElementById('score-parent-batch-status');
+    const phone=window.prompt('Nhập SĐT Zalo thử nghiệm đã khai báo trong Script Properties (ZALO_TEST_RECIPIENT_PHONE). Không nhập số phụ huynh.');
+    if(phone===null)return;
+    const clean=String(phone||'').replace(/\D/g,'');
+    if(!/^0[35789]\d{8}$/.test(clean))return showToast('Số điện thoại kiểm thử không hợp lệ.','error');
+    if(!window.confirm('CHỈ GỬI MỘT TIN THỬ\nĐến số: '+clean+'\nHệ thống không gửi vào hàng đợi và không gửi hàng loạt. Xác nhận?'))return;
+    if(status)status.textContent='Đang gửi một tin thử...';
+    try{
+      loading(true);
+      const resp=await callAPI('sendZaloTestMessage',{phone:clean,confirmation:'GUI THU ZALO'},'POST');
+      const d=resp.data||{};
+      const msg='Mã thử '+(d.request_id||'')+' — '+(d.note||d.status||'Không rõ trạng thái');
+      if(status)status.textContent=msg;
+      showToast(msg,d.status==='SENT'?'success':'error');
+    }catch(e){if(status)status.textContent=String(e.message||e);showError(e);}
+    finally{loading(false);}
   }
   async function scoreCopyText(value){
     if(!value)throw new Error('Chưa có nội dung để sao chép.');
